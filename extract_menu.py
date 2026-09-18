@@ -129,6 +129,17 @@ GENERIC_TAILS = {"soup", "sauce", "noodle", "noodles", "rice", "vegetable", "veg
 TYPO_FIX = {"Marcaroni": "Macaroni", "Blamck": "Black", "Balck": "Black", "Prok": "Pork", "vegetbles": "vegetables",
             "Potatos": "Potatoes"}
 THEME_DEFAULT = {"Mon": "Green Monday"}  # printed as a logo image, not text
+# Plain fruit served as-is is not worth rating; dropped from the app (the stored week files keep it).
+SKIP_DISH = re.compile(r"^(fuji\s+)?(banana|apple|orange|pear)s?$", re.I)
+SKIP_ZH = {"香蕉", "蘋果", "富士蘋果", "香橙", "橙", "蜜梨", "水晶梨", "梨"}
+
+
+def drop_skipped(w):
+    for d in w["days"]:
+        for meal, items in d["meals"].items():
+            d["meals"][meal] = [it for it in items
+                                if not (SKIP_DISH.match(it["en"].strip()) or it["zh"].strip() in SKIP_ZH)]
+    return w
 
 
 def merge_by_width(items, need, sep=" "):
@@ -282,7 +293,7 @@ def load_weeks(folder):
             with open(os.path.join(folder, f), encoding="utf-8") as fh:
                 w = json.load(fh)
             if isinstance(w, dict) and w.get("days"):
-                weeks.append(w)
+                weeks.append(drop_skipped(w))
     weeks.sort(key=lambda w: w["days"][0]["date"])
     return weeks[-KEEP_WEEKS:]
 

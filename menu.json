@@ -207,10 +207,6 @@
               {
                 "en": "Scallion Pork Chop",
                 "zh": "蔥油豬扒"
-              },
-              {
-                "en": "Banana",
-                "zh": "香蕉"
               }
             ],
             "Dinner": [
@@ -225,10 +221,6 @@
               {
                 "en": "Steamed Chicken with Red Dates and Black Fungus",
                 "zh": "紅棗雲耳蒸雞"
-              },
-              {
-                "en": "Banana",
-                "zh": "香蕉"
               }
             ],
             "Supper": [
@@ -262,10 +254,6 @@
               {
                 "en": "Braised Vegetables with Red Fermented Beancurd",
                 "zh": "蜜椒牛仔骨南乳齋"
-              },
-              {
-                "en": "Orange",
-                "zh": "香橙"
               }
             ],
             "Dinner": [
@@ -280,10 +268,6 @@
               {
                 "en": "Braised Vegetables with Red Fermented Beancurd",
                 "zh": "紅燒豬軟骨南乳齋"
-              },
-              {
-                "en": "Orange",
-                "zh": "香橙"
               }
             ],
             "Supper": [
@@ -380,10 +364,6 @@
               {
                 "en": "Steamed Egg w Dried Scallop & Dried Small Shrimp",
                 "zh": "元貝蝦米蒸水蛋"
-              },
-              {
-                "en": "Apple",
-                "zh": "蘋果"
               }
             ],
             "Dinner": [
@@ -398,10 +378,6 @@
               {
                 "en": "Pork Cubes with Sweetcorn",
                 "zh": "粟米肉粒"
-              },
-              {
-                "en": "Apple",
-                "zh": "蘋果"
               }
             ],
             "Supper": [
@@ -558,10 +534,6 @@
               {
                 "en": "Black Pepper Chicken Leg",
                 "zh": "黑椒燒雞脾"
-              },
-              {
-                "en": "Apple",
-                "zh": "富士蘋果"
               }
             ],
             "Dinner": [
@@ -576,10 +548,6 @@
               {
                 "en": "Fried Egg with Chinese Chive and BBQ Pork",
                 "zh": "韮黃叉燒炒蛋"
-              },
-              {
-                "en": "Apple",
-                "zh": "富士蘋果"
               }
             ],
             "Supper": [
@@ -676,10 +644,6 @@
               {
                 "en": "Sweetcorn with Chicken",
                 "zh": "粟米雞球"
-              },
-              {
-                "en": "Banana",
-                "zh": "香蕉"
               }
             ],
             "Dinner": [
@@ -694,10 +658,6 @@
               {
                 "en": "Spare Ribs with Plum Sauce",
                 "zh": "冰梅骨"
-              },
-              {
-                "en": "Banana",
-                "zh": "香蕉"
               }
             ],
             "Supper": [
@@ -731,10 +691,6 @@
               {
                 "en": "Steamed Pork with Preserved Black Olives",
                 "zh": "欖角蒸豬肉"
-              },
-              {
-                "en": "Orange",
-                "zh": "香橙"
               }
             ],
             "Dinner": [
@@ -749,10 +705,6 @@
               {
                 "en": "Sand Ginger Chicken Wing",
                 "zh": "沙薑雞翼"
-              },
-              {
-                "en": "Orange",
-                "zh": "香橙"
               }
             ],
             "Supper": [
@@ -786,10 +738,6 @@
               {
                 "en": "Steamed Egg with Dried Shrimp and Minced Pork",
                 "zh": "蝦米肉碎蒸水蛋"
-              },
-              {
-                "en": "Pear",
-                "zh": "蜜梨"
               }
             ],
             "Dinner": [
@@ -804,10 +752,6 @@
               {
                 "en": "Steamed Pork Ribs with Fermented Black Beans and Bean Curd Puffs",
                 "zh": "豉汁豆卜蒸排骨"
-              },
-              {
-                "en": "Pear",
-                "zh": "蜜梨"
               }
             ],
             "Supper": [
@@ -1037,10 +981,6 @@
                 "zh": "月餅"
               },
               {
-                "en": "Pear",
-                "zh": "水晶梨"
-              },
-              {
                 "en": "Glutinous Ball with Red Bean Soup",
                 "zh": "紅豆沙湯丸糖水"
               }
@@ -1065,10 +1005,6 @@
               {
                 "en": "Moon Cake",
                 "zh": "月餅"
-              },
-              {
-                "en": "Pear",
-                "zh": "水晶梨"
               },
               {
                 "en": "Glutinous Ball with Red Bean Soup",
@@ -1114,10 +1050,6 @@
               {
                 "en": "Stir-fried Beef and Bean Vermicelli in Sa Cha Sauce",
                 "zh": "沙茶粉絲肥牛"
-              },
-              {
-                "en": "Banana",
-                "zh": "香蕉"
               }
             ],
             "Dinner": [
@@ -1132,10 +1064,6 @@
               {
                 "en": "Steam Pork Ribs with Chinese Black Olive",
                 "zh": "欖角蒸豬肉"
-              },
-              {
-                "en": "Banana",
-                "zh": "香蕉"
               }
             ],
             "Supper": [
@@ -1224,10 +1152,6 @@
               {
                 "en": "Steamed Pork Ribs with Dried Daylily and Cloud Ear Fungus",
                 "zh": "金針雲耳蒸排骨"
-              },
-              {
-                "en": "Orange",
-                "zh": "香橙"
               }
             ],
             "Dinner": [
@@ -1242,10 +1166,6 @@
               {
                 "en": "Foo Yung Egg",
                 "zh": "芙蓉煎蛋"
-              },
-              {
-                "en": "Orange",
-                "zh": "香橙"
               }
             ],
             "Supper": [
