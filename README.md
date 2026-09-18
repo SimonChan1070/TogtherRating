@@ -1,4 +1,4 @@
-# Today Together Rating 聚嚐
+# Together Rating 聚嚐
 
 Mobile web app for rating the Together canteen menu. Ratings are stored in a Google Sheet
 (via a small Apps Script web app) and every rating can be shared to WhatsApp.

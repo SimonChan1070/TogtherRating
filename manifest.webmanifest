@@ -1,5 +1,5 @@
 {
-  "name": "Today Together Rating",
+  "name": "Together Rating",
   "short_name": "Together Rating",
   "description": "Rate today's Together canteen dishes and share to WhatsApp",
   "start_url": "./index.html",

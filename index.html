@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Today Together Rating</title>
+<title>Together Rating</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#5FA83A">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -287,7 +287,7 @@
     <div class="brand">
       <div class="mark zh">聚</div>
       <div>
-        <h1>Today Together Rating</h1>
+        <h1>Together Rating</h1>
         <div class="sub" id="week-label">Together canteen</div>
       </div>
     </div>
@@ -718,20 +718,22 @@
     btn.disabled = false; btn.innerHTML = SUBMIT_HTML;
     toast(e.pending ? "Saved on this phone — will retry sending later." : "Rating saved — thank you! 多謝");
     $("comment").value = ""; state.verdict = null; state.score = 70; state.dish = null;
+    // show the new rating (and any red) at once; loadResults() below replaces this with the Sheet's rows
+    if (!e.pending) (state.results = state.results || []).push(asResultRow(e));
     renderAll();
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
     if (!e.pending) loadResults();
   };
 
+  // the row shape the Sheet hands back from doGet (and what doPost stores)
+  function asResultRow(e) {
+    return { ts: e.ts, date: e.date, meal: e.meal, food: `${e.en} ${e.zh}`.trim(), rating: e.rating,
+             score: e.score, comment: e.comment, name: e.name };
+  }
   // Apps Script web app: a text/plain POST needs no CORS preflight; it answers {ok:true} after a redirect.
   async function postRating(c, e) {
     try {
-      const res = await fetch(c.apiUrl, {
-        method: "POST", body: JSON.stringify({
-          date: e.date, meal: e.meal, food: `${e.en} ${e.zh}`.trim(), rating: e.rating,
-          score: e.score, comment: e.comment, name: e.name
-        })
-      });
+      const res = await fetch(c.apiUrl, { method: "POST", body: JSON.stringify(asResultRow(e)) });
       const j = await res.json();
       return !!j.ok;
     } catch (err) { console.warn("send failed", err); return false; }
@@ -794,7 +796,7 @@
     ctx.fillStyle = C.green; ctx.font = `900 50px ${ZH}`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
     ctx.fillText("\u805a", PAD + 52, 104);
     ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
-    ctx.fillStyle = "#fff"; ctx.font = `900 54px ${UI}`; ctx.fillText("Today Together Rating", PAD + 130, 92);
+    ctx.fillStyle = "#fff"; ctx.font = `900 54px ${UI}`; ctx.fillText("Together Rating", PAD + 130, 92);
     const first = entries[0];
     ctx.font = `700 34px ${UI}`; ctx.globalAlpha = .9;
     ctx.fillText(`${first.weekday} ${fmtDate(first.date)}  \u00b7  ${entries.every(x => x.meal === first.meal) ? first.meal + " " + MEAL_ZH[first.meal] : "Today's ratings"}`, PAD + 130, 146);
@@ -848,7 +850,7 @@
   }
   $("img-share").onclick = () => {
     if (!imgFile) return;
-    navigator.share({ files: [imgFile], title: "Today Together Rating" }).catch(err => { if (err.name !== "AbortError") toast("Share failed: " + err.message); });
+    navigator.share({ files: [imgFile], title: "Together Rating" }).catch(err => { if (err.name !== "AbortError") toast("Share failed: " + err.message); });
   };
   $("img-close").onclick = () => { $("img-modal").hidden = true; };
   $("img-modal").onclick = (e) => { if (e.target === $("img-modal")) $("img-modal").hidden = true; };

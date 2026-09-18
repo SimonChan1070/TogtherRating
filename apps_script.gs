@@ -1,4 +1,4 @@
-// Together Rating DB — web endpoint for the Today Together Rating app
+// Together Rating DB — web endpoint for the Together Rating app
 // (deployed from the Apps Script project "Together Rating API" bound to the Google Sheet "Together Rating DB")
 // POST JSON {date, meal, food, rating, score, comment, name} -> appends a row
 // GET ?date=yyyy-mm-dd -> JSON array of ratings (all rows if no date)
