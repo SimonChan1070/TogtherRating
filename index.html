@@ -582,7 +582,7 @@
   }
   $("tab-rate").onclick = () => { state.tab = "rate"; renderTabs(); window.scrollTo({ top: 0 }); };
   $("tab-all").onclick = () => { state.tab = "all"; renderTabs(); window.scrollTo({ top: 0 }); loadResults(); };
-  $("btn-refresh").onclick = () => { $("btn-refresh").textContent = "Refreshing…"; loadResults().finally(() => { $("btn-refresh").textContent = "Refresh"; }); };
+  $("btn-refresh").onclick = () => { $("btn-refresh").textContent = "Refreshing…"; loadResults(true).finally(() => { $("btn-refresh").textContent = "Refresh"; }); };
 
   /* ---------- all-ratings feed (every rating + comment for the selected day) ---------- */
   function dishFor(food) {
@@ -694,7 +694,7 @@
     if (!e.pending) { (state.results = state.results || []).push(asResultRow(e)); cacheResults(e.date, state.results); }
     renderAll();
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-    if (!e.pending) loadResults();
+    if (!e.pending) loadResults(true);
   };
 
   // the row shape the Sheet hands back from doGet (and what doPost stores)
@@ -716,7 +716,7 @@
     const c = config(); if (!configReady(c)) return;
     const log = store.get("ttr_log", []); let changed = false;
     for (const e of log) if (e.pending && await postRating(c, e)) { e.pending = false; changed = true; }
-    if (changed) { store.set("ttr_log", log); renderLog(); loadResults(); }
+    if (changed) { store.set("ttr_log", log); renderLog(); loadResults(true); }
   }
 
   /* ---------- image card (canvas → PNG → share sheet) ---------- */
@@ -846,30 +846,49 @@
     const avg = Math.round(rows.reduce((s, r) => s + (+r.score || 0), 0) / rows.length);
     return { n: rows.length, good, bad: rows.length - good, avg, rows };
   }
-  // Apps Script answers in ~1-3 s, so each day's rows are kept on the phone: show the last copy at once,
-  // then refresh from the Sheet in the background (newest KEEP_DAYS days only).
-  const RESULTS_KEY = "ttr_results", KEEP_DAYS = 21;
-  function cachedResults(date) { return (store.get(RESULTS_KEY, {})[date] || {}).rows || null; }
-  function cacheResults(date, rows) {
-    const all = store.get(RESULTS_KEY, {}); all[date] = { rows, at: Date.now() };
+  // Apps Script answers in ~1-3 s whatever the payload, so the whole Sheet is fetched once when the app
+  // opens and kept on the phone per day. Switching days reads that copy; a day is only re-fetched when
+  // its copy is older than FRESH_MS or the user asks (submit, Refresh).
+  const RESULTS_KEY = "ttr_results", KEEP_DAYS = 90, FRESH_MS = 60 * 1000;
+  function cachedEntry(date) { return store.get(RESULTS_KEY, {})[date] || null; }
+  function cacheResults(date, rows, all) {
+    const own = !all; all = all || store.get(RESULTS_KEY, {});
+    all[date] = { rows, at: Date.now() };
     for (const k of Object.keys(all).sort().slice(0, -KEEP_DAYS)) delete all[k];
-    store.set(RESULTS_KEY, all);
+    if (own) store.set(RESULTS_KEY, all);
   }
-  async function loadResults() {
+  function showResults(date, rows) {
+    if (state.date !== date) return; // user moved to another day meanwhile
+    state.results = rows; renderDishes(); renderFeed();
+  }
+  async function loadResults(force) {
     const c = config(); if (!configReady(c) || !state.date) return;
-    const date = state.date;
-    if (!state.results) {
-      const rows = cachedResults(date);
-      if (rows) { state.results = rows; renderDishes(); renderFeed(); }
-    }
+    const date = state.date, hit = cachedEntry(date);
+    if (!state.results && hit) showResults(date, hit.rows);
+    if (!force && hit && Date.now() - hit.at < FRESH_MS) return;
     try {
       const res = await fetch(`${c.apiUrl}?date=${encodeURIComponent(date)}`, { cache: "no-store" });
       const rows = await res.json();
       if (!Array.isArray(rows)) return;
-      cacheResults(date, rows);
-      if (state.date !== date) return; // user moved to another day meanwhile
-      state.results = rows;
-      renderDishes(); renderFeed();
+      cacheResults(date, rows); showResults(date, rows);
+    } catch (err) { console.warn("results not loaded", err); }
+  }
+  // one call for every day: days with no rows are cached as [] so they don't trigger a fetch of their own
+  async function loadAllResults() {
+    const c = config(); if (!configReady(c)) return;
+    const hit = state.date && cachedEntry(state.date);
+    if (!state.results && hit) showResults(state.date, hit.rows);
+    try {
+      const res = await fetch(c.apiUrl, { cache: "no-store" });
+      const rows = await res.json();
+      if (!Array.isArray(rows)) return;
+      const byDate = {};
+      for (const w of WEEKS) for (const d of w.days) byDate[d.date] = [];
+      for (const r of rows) (byDate[r.date] = byDate[r.date] || []).push(r);
+      const all = {};
+      for (const [date, list] of Object.entries(byDate)) cacheResults(date, list, all);
+      store.set(RESULTS_KEY, all);
+      if (state.date) showResults(state.date, byDate[state.date] || []);
     } catch (err) { console.warn("results not loaded", err); }
   }
 
@@ -903,7 +922,13 @@
   }
 
   renderAll();
-  loadResults();
+  loadAllResults();
   flushPending();
+  // coming back to the app after a while: refresh the whole Sheet again
+  let hiddenAt = 0;
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") hiddenAt = Date.now();
+    else if (Date.now() - hiddenAt > FRESH_MS) loadAllResults();
+  });
 })();
 </script>
