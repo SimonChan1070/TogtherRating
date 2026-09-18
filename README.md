@@ -44,13 +44,13 @@ Fix a typo by editing that JSON file and re-running `python extract_menu.py --al
 
 ## The database: Google Sheet "Together Rating DB"
 
-- Sheet: https://docs.google.com/spreadsheets/d/SHEET-ID-REDACTED/edit
-  (tab `Ratings`, columns Timestamp · Date · Meal · Food · Rating · Score · Comment · Name)
+- A private Google Sheet in the owner's Drive (sharing: Restricted — the link is deliberately not in this
+  repo). Tab `Ratings`, columns Timestamp · Date · Meal · Food · Rating · Score · Comment · Name.
 - Attached Apps Script project **Together Rating API** (source in `apps_script.gs`), deployed as a
   web app (Execute as: me, Access: anyone). The app POSTs each rating to it and GETs the day's
   ratings back to show 👍/👎 counts and average score under each dish.
-- Web app URL (already in `index.html` → `CONFIG.apiUrl`):
-  `https://script.google.com/macros/s/AKfycby_on4s_4w1KrxNkI5-qxKlOnkPnSTTohanp3yYPeFGfTq1l_U9gLCbmMB_anpdq0Bd/exec`
+- The web app URL lives in `index.html` → `CONFIG.apiUrl`. `doGet` returns rating rows without the
+  Name column, so names never leave the Sheet.
 
 If you ever change the script: Apps Script → Deploy → **Manage deployments** → ✎ → Version: *New version*
 → Deploy. That keeps the same URL. (A "New deployment" gets a new URL, which you'd then paste into `CONFIG.apiUrl`.)
@@ -81,9 +81,9 @@ keeps showing the current week by default and the new one appears under ›. If 
 - Week bar ‹ 14 – 20 Sep 2026 › (tap the label for a picker): browse past weeks and their ratings, or a coming
   week once its menu is imported. Defaults to the week containing today. Up to 12 weeks are carried in the app.
 - Day chips (defaults to today) and Breakfast / Lunch / Dinner / Supper tabs (defaults by clock).
-- Tap a dish → 👍 Good / 👎 Not Good, score 0–100 (slider + quick presets), comment, name (remembered).
+- Tap a dish → 👍 Good / 👎 Not Good, score 0–100 (slider + quick presets), comment, optional name (remembered, never shown to others).
 - **Submit** saves to the Google Sheet and keeps a local copy under "My ratings today".
-- Each dish shows everyone's 👍/👎 counts, average score and the latest comments (with names) for that day, live from the Sheet; tapping a dish lists all of them.
+- Each dish shows everyone's 👍/👎 counts, average score and the latest comments for that day, live from the Sheet; tapping a dish lists all of them.
 - Bottom tab **All ratings 全部評價**: a feed of every rating and comment for the selected day, grouped by meal and dish, with a day summary (count, average, % good). Each meal and dish collapses/expands (tap the chevron), plus Collapse all / Expand all and Refresh.
-- The Sheet link is not exposed in the app; only the rating service URL sits under Settings → Advanced.
-- **Share to WhatsApp as image** draws a rating card (name, meal, dish, comment, 👍/👎, score) as a PNG and opens the phone's share sheet so it can be sent to WhatsApp as a picture; on desktop it offers "Save image" instead.
+- Neither the Sheet link nor the rating service URL is shown anywhere in the app.
+- **Share to WhatsApp as image** draws a rating card (meal, dish, comment, 👍/👎, score) as a PNG and opens the phone's share sheet so it can be sent to WhatsApp as a picture; on desktop it offers "Save image" instead.

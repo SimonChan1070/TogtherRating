@@ -44,7 +44,7 @@ function doGet(e) {
     if (!r[1]) continue;
     var date = fmt_(r[1]);
     if (want && date !== want) continue;
-    out.push({ ts: r[0], date: date, meal: r[2], food: r[3], rating: r[4], score: Number(r[5]) || 0, comment: r[6], name: r[7] });
+    out.push({ ts: r[0], date: date, meal: r[2], food: r[3], rating: r[4], score: Number(r[5]) || 0, comment: r[6] }); // name stays in the Sheet only
   }
   return json_(out);
 }
