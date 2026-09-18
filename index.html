@@ -150,7 +150,7 @@
   .input { width: 100%; border: 2px solid var(--line); background: var(--panel); border-radius: 12px; padding: 10px 12px; font-size: 16px; text-transform: none; letter-spacing: 0; font-weight: 600; color: var(--ink); }
   textarea.input { min-height: 72px; resize: vertical; }
 
-  .btn { border: 0; border-radius: 14px; padding: 14px; font-size: 16px; font-weight: 900; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .btn { border: 0; border-radius: 14px; padding: 14px; font-size: 16px; font-weight: 900; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
   .btn.primary { background: var(--brand); color: var(--brand-ink); }
   .btn.primary:disabled { opacity: .5; cursor: default; }
   .btn.wa { background: var(--wa); color: #062B12; }
@@ -181,6 +181,14 @@
   .install .t kbd { font: inherit; font-weight: 800; color: var(--brand-deep); }
   .install .x { border: 0; background: transparent; color: var(--ink-3); font-size: 22px; line-height: 1; padding: 4px; }
   .install .btn { padding: 8px 12px; font-size: 14px; }
+
+  /* ---------- image share preview ---------- */
+  .share-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .share-row .btn { padding: 12px 8px; font-size: 14px; }
+  .btn.img { background: var(--panel-2); color: var(--brand-deep); border: 2px solid var(--lime); }
+  .img-modal .card { align-content: start; }
+  .img-modal img { width: 100%; height: auto; border-radius: 14px; box-shadow: var(--shadow); background: #fff; }
+  .img-modal .note { text-align: center; }
 
   /* ---------- toast & settings ---------- */
   .toast { position: fixed; left: 16px; right: 16px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 20; background: var(--ink); color: var(--ground); border-radius: 14px; padding: 12px 14px; font-weight: 700; box-shadow: var(--shadow); text-align: center; }
@@ -280,10 +288,16 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
         Submit rating
       </button>
-      <button class="btn wa" id="btn-share-one">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
-        Share this rating to WhatsApp
-      </button>
+      <div class="share-row">
+        <button class="btn wa" id="btn-share-one">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+          Share text
+        </button>
+        <button class="btn img" id="btn-image-one">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-8 8"/></svg>
+          Share as image
+        </button>
+      </div>
       <div class="note" id="submit-note"></div>
     </div>
   </section>
@@ -295,13 +309,32 @@
     </div>
     <div class="log" id="log" style="margin-top:8px"></div>
     <div class="actions" style="margin-top:10px">
-      <button class="btn wa" id="btn-share-all" hidden>
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
-        Share today's ratings to WhatsApp
-      </button>
+      <div class="share-row" id="share-all-row" hidden>
+        <button class="btn wa" id="btn-share-all">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+          Share today as text
+        </button>
+        <button class="btn img" id="btn-image-all">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-8 8"/></svg>
+          Share today as image
+        </button>
+      </div>
     </div>
   </section>
 </main>
+
+<div class="modal img-modal" id="img-modal" hidden>
+  <div class="card">
+    <h2>Share as image</h2>
+    <img id="img-preview" alt="Rating card">
+    <div class="actions">
+      <button class="btn wa" id="img-share">Share… (WhatsApp)</button>
+      <a class="btn ghost" id="img-save" download="together-rating.png">Save image</a>
+      <button class="btn ghost" id="img-close">Close</button>
+    </div>
+    <div class="note" id="img-note"></div>
+  </div>
+</div>
 
 <div class="modal" id="modal" hidden>
   <div class="card">
@@ -420,7 +453,7 @@
         <span class="t"><span class="zh">${esc(e.zh)}</span><span class="m">${e.meal} · ${esc(e.en)}${e.pending ? ' · <span class="pending">not sent</span>' : ""}</span>${e.comment ? `<span class="c">“${esc(e.comment)}”</span>` : ""}</span>
         <span class="s ${g ? "g" : "b"}">${e.score}<small>/100</small></span></div>`);
     }
-    $("btn-share-all").hidden = !all.length;
+    $("share-all-row").hidden = !all.length;
     $("btn-clear-log").hidden = !all.length;
   }
   function renderAll() { renderDays(); renderMeals(); renderDishes(); renderSheet(); renderLog(); }
@@ -514,6 +547,120 @@
     const all = store.get("ttr_log", []).filter(e => e.date === state.date);
     if (all.length) shareWA(waText(all));
   };
+  /* ---------- image card (canvas → PNG → share sheet) ---------- */
+  const C = { green: "#5FA83A", deep: "#2E6B2A", lime: "#C9E56B", ink: "#1B2617", ink2: "#4F5E48", ink3: "#8A9782",
+              line: "#D8E2CF", good: "#3E9E4A", bad: "#D6553F", ground: "#F4F7F0", panel: "#FFFFFF" };
+  const UI = '"Nunito", "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
+  const ZH = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", "Nunito", sans-serif';
+
+  // wraps on spaces when it can, otherwise per character (Chinese has no spaces)
+  function wrap(ctx, text, maxW) {
+    const lines = []; let line = "";
+    for (const ch of String(text)) {
+      const test = line + ch;
+      if (ctx.measureText(test).width <= maxW || !line) { line = test; continue; }
+      const cut = line.lastIndexOf(" ");
+      if (cut > 0 && ch !== " ") { lines.push(line.slice(0, cut)); line = line.slice(cut + 1) + ch; }
+      else { lines.push(line); line = ch === " " ? "" : ch; }
+    }
+    if (line) lines.push(line);
+    return lines;
+  }
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+  }
+
+  async function buildCard(entries) {
+    try { await document.fonts.load(`900 52px ${UI}`); await document.fonts.load(`700 44px ${ZH}`); } catch {}
+    const W = 1080, PAD = 56, INNER = W - PAD * 2;
+    const measure = document.createElement("canvas").getContext("2d");
+    // pass 1: layout
+    const blocks = entries.map(e => {
+      measure.font = `500 30px ${UI}`; const en = wrap(measure, e.en, INNER - 420);
+      measure.font = `700 44px ${ZH}`; const zh = wrap(measure, e.zh, INNER - 420);
+      measure.font = `italic 500 30px ${UI}`; const cm = e.comment ? wrap(measure, "\u201c" + e.comment + "\u201d", INNER - 120) : [];
+      const h = 40 + zh.length * 52 + en.length * 38 + (cm.length ? 12 + cm.length * 40 : 0) + (e.name ? 44 : 0) + 36;
+      return { e, zh, en, cm, h };
+    });
+    const HEAD = 200, FOOT = 90;
+    const H = HEAD + 40 + blocks.reduce((a, b) => a + b.h + 20, 0) + FOOT;
+    const cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+    const ctx = cv.getContext("2d");
+    ctx.fillStyle = C.ground; ctx.fillRect(0, 0, W, H);
+    // header
+    ctx.fillStyle = C.green; ctx.fillRect(0, 0, W, HEAD);
+    ctx.fillStyle = C.lime; ctx.fillRect(0, HEAD - 8, W, 8);
+    ctx.beginPath(); ctx.arc(PAD + 52, 100, 52, 0, Math.PI * 2); ctx.fillStyle = C.lime; ctx.fill();
+    ctx.beginPath(); ctx.arc(PAD + 52, 100, 44, 0, Math.PI * 2); ctx.fillStyle = "#fff"; ctx.fill();
+    ctx.fillStyle = C.green; ctx.font = `900 50px ${ZH}`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText("\u805a", PAD + 52, 104);
+    ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
+    ctx.fillStyle = "#fff"; ctx.font = `900 54px ${UI}`; ctx.fillText("Today Together Rating", PAD + 130, 92);
+    const first = entries[0];
+    ctx.font = `700 34px ${UI}`; ctx.globalAlpha = .9;
+    ctx.fillText(`${first.weekday} ${fmtDate(first.date)}  \u00b7  ${entries.every(x => x.meal === first.meal) ? first.meal + " " + MEAL_ZH[first.meal] : "Today's ratings"}`, PAD + 130, 146);
+    ctx.globalAlpha = 1;
+    // blocks
+    let y = HEAD + 40;
+    for (const b of blocks) {
+      roundRect(ctx, PAD, y, INNER, b.h, 28); ctx.fillStyle = C.panel; ctx.fill();
+      ctx.strokeStyle = C.line; ctx.lineWidth = 3; ctx.stroke();
+      const good = b.e.rating === "Good";
+      ctx.font = `64px ${UI}`; ctx.textBaseline = "alphabetic"; ctx.fillStyle = C.ink;
+      ctx.fillText(good ? "\ud83d\udc4d" : "\ud83d\udc4e", PAD + 32, y + 92);
+      let ty = y + 40 + 44;
+      ctx.fillStyle = C.ink; ctx.font = `700 44px ${ZH}`;
+      for (const l of b.zh) { ctx.fillText(l, PAD + 124, ty); ty += 52; }
+      ctx.fillStyle = C.ink2; ctx.font = `500 30px ${UI}`;
+      for (const l of b.en) { ctx.fillText(l, PAD + 124, ty - 8); ty += 38; }
+      // score, right aligned
+      ctx.textAlign = "right"; ctx.fillStyle = good ? C.good : C.bad; ctx.font = `900 84px ${UI}`;
+      ctx.fillText(String(b.e.score), W - PAD - 100, y + 108);
+      ctx.fillStyle = C.ink3; ctx.font = `800 28px ${UI}`; ctx.fillText("/100", W - PAD - 32, y + 108);
+      ctx.font = `800 24px ${UI}`; ctx.fillStyle = good ? C.good : C.bad;
+      ctx.fillText(good ? "GOOD \u597d\u98df" : "NOT GOOD \u5514\u597d\u98df", W - PAD - 32, y + 146);
+      ctx.textAlign = "left";
+      if (b.cm.length) {
+        ty += 12; ctx.fillStyle = C.ink2; ctx.font = `italic 500 30px ${UI}`;
+        for (const l of b.cm) { ctx.fillText(l, PAD + 40, ty); ty += 40; }
+      }
+      if (b.e.name) { ctx.fillStyle = C.ink3; ctx.font = `800 28px ${UI}`; ctx.fillText("\u2014 " + b.e.name, PAD + 40, ty + 6); }
+      y += b.h + 20;
+    }
+    // footer
+    ctx.fillStyle = C.ink3; ctx.font = `700 26px ${UI}`; ctx.textAlign = "center";
+    ctx.fillText("\u805a\u5618 Together canteen  \u00b7  " + location.host + location.pathname.replace(/index\.html$/, ""), W / 2, H - 36);
+    return cv;
+  }
+
+  let imgFile = null, imgUrl = null;
+  async function openImageShare(entries) {
+    toast("Drawing the card\u2026");
+    const cv = await buildCard(entries);
+    const blob = await new Promise(r => cv.toBlob(r, "image/png"));
+    if (imgUrl) URL.revokeObjectURL(imgUrl);
+    imgUrl = URL.createObjectURL(blob);
+    imgFile = new File([blob], `together-rating-${entries[0].date}.png`, { type: "image/png" });
+    $("img-preview").src = imgUrl;
+    $("img-save").href = imgUrl; $("img-save").download = imgFile.name;
+    const canShare = !!(navigator.canShare && navigator.canShare({ files: [imgFile] }));
+    $("img-share").hidden = !canShare;
+    $("img-note").textContent = canShare ? "Share\u2026 opens your phone's share sheet \u2014 pick WhatsApp there." : "This browser can't share files directly: save the image, then attach it in WhatsApp.";
+    $("img-modal").hidden = false;
+  }
+  $("img-share").onclick = () => {
+    if (!imgFile) return;
+    navigator.share({ files: [imgFile], title: "Today Together Rating" }).catch(err => { if (err.name !== "AbortError") toast("Share failed: " + err.message); });
+  };
+  $("img-close").onclick = () => { $("img-modal").hidden = true; };
+  $("img-modal").onclick = (e) => { if (e.target === $("img-modal")) $("img-modal").hidden = true; };
+  $("btn-image-one").onclick = () => { const err = validate(); if (err) return toast(err); openImageShare([currentEntry()]); };
+  $("btn-image-all").onclick = () => {
+    const all = store.get("ttr_log", []).filter(e => e.date === state.date);
+    if (all.length) openImageShare(all);
+  };
+
   $("btn-clear-log").onclick = () => {
     store.set("ttr_log", store.get("ttr_log", []).filter(e => e.date !== state.date)); renderLog();
   };

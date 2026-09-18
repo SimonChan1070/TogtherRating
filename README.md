@@ -61,4 +61,5 @@ Weekly menu update = re-run `extract_menu.py`, commit and push; installed apps p
 - Tap a dish → 👍 Good / 👎 Not Good, score 0–100 (slider + quick presets), comment, name (remembered).
 - **Submit** saves to the Google Sheet and keeps a local copy under "My ratings today".
 - Each dish shows everyone's 👍/👎 counts and average score for that day, live from the Sheet.
-- **Share to WhatsApp** opens WhatsApp with a formatted message for one rating or the whole day.
+- **Share text** opens WhatsApp with a formatted message for one rating or the whole day.
+- **Share as image** draws a rating card (name, meal, dish, comment, 👍/👎, score) as a PNG and opens the phone's share sheet so it can be sent to WhatsApp as a picture; on desktop it offers "Save image" instead.
