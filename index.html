@@ -97,7 +97,35 @@
   .day.on { background: var(--brand-ink); color: var(--brand); }
 
   /* ---------- body ---------- */
-  .wrap { max-width: 560px; margin: 0 auto; padding: 14px 16px calc(24px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 14px; }
+  .wrap { max-width: 560px; margin: 0 auto; padding: 14px 16px calc(90px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 14px; }
+  .view { display: grid; gap: 14px; }
+
+  /* ---------- bottom tab bar ---------- */
+  .tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; background: var(--panel); border-top: 1px solid var(--line);
+    padding: 6px 16px calc(6px + env(safe-area-inset-bottom, 0px)); display: grid; grid-template-columns: 1fr 1fr; gap: 6px; max-width: 560px; margin: 0 auto; }
+  .tabbar button { border: 0; background: transparent; border-radius: 12px; padding: 6px 4px; display: grid; justify-items: center; gap: 2px; font-size: 12px; font-weight: 800; color: var(--ink-3); }
+  .tabbar button svg { width: 24px; height: 24px; }
+  .tabbar button small { font-size: 11px; font-weight: 700; }
+  .tabbar button.on { color: var(--brand-deep); background: var(--panel-2); }
+
+  /* ---------- all-ratings feed ---------- */
+  .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .summary .tile { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 10px 8px; text-align: center; display: grid; gap: 2px; }
+  .summary .tile b { font-size: 22px; font-weight: 900; font-variant-numeric: tabular-nums; color: var(--brand-deep); }
+  .summary .tile span { font-size: 11px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-3); }
+  .feed { display: grid; gap: 12px; }
+  .feed .meal-h { font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); margin-top: 4px; }
+  .feed .fdish { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; display: grid; gap: 8px; }
+  .feed .fdish .head { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: baseline; }
+  .feed .fdish .zh { font-size: 17px; font-weight: 700; }
+  .feed .fdish .en { font-size: 13px; color: var(--ink-2); }
+  .feed .fdish .avg { font-size: 22px; font-weight: 900; font-variant-numeric: tabular-nums; color: var(--brand-deep); }
+  .feed .fdish .avg small { font-size: 11px; color: var(--ink-3); font-weight: 800; }
+  .feed .fdish .stat { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .feed .fdish .stat .bar { flex: 1; height: 5px; border-radius: 3px; background: var(--panel-2); overflow: hidden; }
+  .feed .fdish .stat .bar i { display: block; height: 100%; background: var(--brand); }
+  .feed .fdish .stat .g { color: var(--good); } .feed .fdish .stat .b { color: var(--bad); }
+  .feed .fdish .others { border-top: 1px dashed var(--line); padding-top: 8px; }
 
   .meals { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; background: var(--panel-2); padding: 4px; border-radius: 14px; }
   .meal { border: 0; background: transparent; padding: 8px 2px; border-radius: 11px; font-weight: 800; font-size: 13px; color: var(--ink-2); line-height: 1.1; }
@@ -243,6 +271,20 @@
 </header>
 
 <main class="wrap">
+  <div class="view" id="all-view" hidden>
+    <div class="section-head">
+      <h2 id="all-title">All ratings</h2>
+      <button class="chip" id="btn-refresh" type="button">Refresh</button>
+    </div>
+    <div class="summary" id="summary" hidden>
+      <div class="tile"><b id="sum-n">0</b><span>ratings</span></div>
+      <div class="tile"><b id="sum-avg">–</b><span>avg score</span></div>
+      <div class="tile"><b id="sum-good">–</b><span>👍 good</span></div>
+    </div>
+    <div class="feed" id="feed"></div>
+  </div>
+
+  <div class="view" id="rate-view">
   <div class="install" id="install" hidden>
     <img src="icons/icon-192.png" alt="">
     <div class="t"><b>Install as an app</b><span id="install-how"></span></div>
@@ -317,7 +359,19 @@
       </button>
     </div>
   </section>
+  </div>
 </main>
+
+<nav class="tabbar" aria-label="Sections">
+  <button id="tab-rate" class="on" aria-pressed="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg>
+    Rate <small class="zh">評分</small>
+  </button>
+  <button id="tab-all" aria-pressed="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/><path d="M8 11h8M8 14.5h5"/></svg>
+    All ratings <small class="zh">全部評價</small>
+  </button>
+</nav>
 
 <div class="modal img-modal" id="img-modal" hidden>
   <div class="card">
@@ -365,7 +419,7 @@
     date: (MENU.days.find(d => d.date === todayIso) || MENU.days[0] || {}).date,
     meal: mealByClock(),
     dish: null, verdict: null, score: 70,
-    results: null
+    results: null, tab: "rate"
   };
 
   function mealByClock() {
@@ -465,7 +519,57 @@
     $("btn-image-all").hidden = !all.length;
     $("btn-clear-log").hidden = !all.length;
   }
-  function renderAll() { renderDays(); renderMeals(); renderDishes(); renderSheet(); renderLog(); }
+  function renderAll() { renderDays(); renderMeals(); renderDishes(); renderSheet(); renderLog(); renderFeed(); renderTabs(); }
+
+  /* ---------- tabs ---------- */
+  function renderTabs() {
+    const all = state.tab === "all";
+    $("rate-view").hidden = all; $("all-view").hidden = !all;
+    $("tab-rate").classList.toggle("on", !all); $("tab-rate").setAttribute("aria-pressed", !all);
+    $("tab-all").classList.toggle("on", all); $("tab-all").setAttribute("aria-pressed", all);
+  }
+  $("tab-rate").onclick = () => { state.tab = "rate"; renderTabs(); window.scrollTo({ top: 0 }); };
+  $("tab-all").onclick = () => { state.tab = "all"; renderTabs(); window.scrollTo({ top: 0 }); loadResults(); };
+  $("btn-refresh").onclick = () => { $("btn-refresh").textContent = "Refreshing…"; loadResults().finally(() => { $("btn-refresh").textContent = "Refresh"; }); };
+
+  /* ---------- all-ratings feed (every rating + comment for the selected day) ---------- */
+  function dishFor(food) {
+    const d = day(); if (!d) return null;
+    for (const meal of MEALS) for (const it of d.meals[meal] || []) if (String(food).startsWith(it.en)) return it;
+    return null;
+  }
+  function renderFeed() {
+    const d = day();
+    $("all-title").textContent = d ? `All ratings · ${dow(d.date)} ${fmtDate(d.date)}` : "All ratings";
+    const feed = $("feed"); feed.innerHTML = "";
+    const rows = state.results;
+    if (!rows) { feed.innerHTML = `<div class="empty">Loading ratings…</div>`; $("summary").hidden = true; return; }
+    if (!rows.length) { feed.innerHTML = `<div class="empty">No ratings yet for this day — be the first!</div>`; $("summary").hidden = true; return; }
+    const good = rows.filter(r => r.rating === "Good").length;
+    $("sum-n").textContent = rows.length;
+    $("sum-avg").textContent = Math.round(rows.reduce((a, r) => a + (+r.score || 0), 0) / rows.length);
+    $("sum-good").textContent = Math.round(good / rows.length * 100) + "%";
+    $("summary").hidden = false;
+    for (const meal of MEALS) {
+      const inMeal = rows.filter(r => r.meal === meal);
+      if (!inMeal.length) continue;
+      feed.insertAdjacentHTML("beforeend", `<div class="meal-h">${meal} ${MEAL_ZH[meal]}</div>`);
+      // group by dish, keep menu order where possible
+      const groups = new Map();
+      for (const r of inMeal) { const key = (dishFor(r.food) || {}).en || String(r.food); if (!groups.has(key)) groups.set(key, []); groups.get(key).push(r); }
+      for (const [key, list] of groups) {
+        const it = dishFor(list[0].food) || { en: key, zh: "" };
+        const g = list.filter(r => r.rating === "Good").length;
+        const avg = Math.round(list.reduce((a, r) => a + (+r.score || 0), 0) / list.length);
+        const sorted = list.slice().sort((a, b) => String(b.ts).localeCompare(String(a.ts)));
+        feed.insertAdjacentHTML("beforeend", `<div class="fdish">
+          <div class="head"><div><div class="zh">${esc(it.zh || it.en)}</div>${it.zh ? `<div class="en">${esc(it.en)}</div>` : ""}</div><div class="avg">${avg}<small>/100</small></div></div>
+          <div class="stat"><span class="g">👍 ${g}</span><span class="b">👎 ${list.length - g}</span><span class="bar"><i style="width:${avg}%"></i></span><span>${list.length} rating${list.length === 1 ? "" : "s"}</span></div>
+          <div class="others">${sorted.map(x => `<div class="row"><span>${x.rating === "Good" ? "👍" : "👎"}</span><span><span class="who">${esc(x.name || "Anonymous")}</span>${x.comment ? `<br><span class="c">${esc(x.comment)}</span>` : ""}</span><span class="s ${x.rating === "Good" ? "g" : "b"}">${x.score}</span></div>`).join("")}</div>
+        </div>`);
+      }
+    }
+  }
   function esc(s) { return String(s ?? "").replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch])); }
 
   /* ---------- rating form ---------- */
@@ -670,7 +774,7 @@
       const rows = await res.json();
       if (state.date !== date) return; // user moved to another day meanwhile
       state.results = Array.isArray(rows) ? rows : [];
-      renderDishes();
+      renderDishes(); renderFeed();
     } catch (err) { console.warn("results not loaded", err); }
   }
 
