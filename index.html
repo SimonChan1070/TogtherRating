@@ -1,0 +1,595 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Today Together Rating</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#5FA83A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Together Rating">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;900&family=Noto+Sans+TC:wght@500;700&display=swap">
+<style>
+  :root {
+    --ground: #F4F7F0;
+    --panel: #FFFFFF;
+    --panel-2: #EAF1E3;
+    --ink: #1B2617;
+    --ink-2: #4F5E48;
+    --ink-3: #8A9782;
+    --line: #D8E2CF;
+    --brand: #5FA83A;
+    --brand-deep: #2E6B2A;
+    --brand-ink: #FFFFFF;
+    --lime: #C9E56B;
+    --good: #3E9E4A;
+    --good-soft: #DFF3E1;
+    --bad: #D6553F;
+    --bad-soft: #FBE4DF;
+    --wa: #25D366;
+    --shadow: 0 10px 30px rgba(30, 60, 20, .10);
+    --radius: 18px;
+    --font-ui: "Nunito", "Noto Sans TC", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-zh: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", "Nunito", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #131A10; --panel: #1C2618; --panel-2: #243120;
+      --ink: #EDF3E8; --ink-2: #B7C4AE; --ink-3: #7F8E76; --line: #34432E;
+      --brand: #6CB945; --brand-deep: #A9DD7E; --brand-ink: #10200C; --lime: #8FB63F;
+      --good: #63C46F; --good-soft: #1F3A24; --bad: #F07A63; --bad-soft: #43231E;
+      --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #131A10; --panel: #1C2618; --panel-2: #243120;
+    --ink: #EDF3E8; --ink-2: #B7C4AE; --ink-3: #7F8E76; --line: #34432E;
+    --brand: #6CB945; --brand-deep: #A9DD7E; --brand-ink: #10200C; --lime: #8FB63F;
+    --good: #63C46F; --good-soft: #1F3A24; --bad: #F07A63; --bad-soft: #43231E;
+    --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+  }
+
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font: 500 16px/1.4 var(--font-ui); -webkit-font-smoothing: antialiased;
+  }
+  .zh { font-family: var(--font-zh); }
+  button, input, textarea { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  :focus-visible { outline: 3px solid var(--lime); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+  /* ---------- header ---------- */
+  .top {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+    background: var(--brand); color: var(--brand-ink);
+    padding: 12px 16px 0;
+    box-shadow: 0 2px 0 var(--lime);
+  }
+  .top-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .brand .mark {
+    width: 40px; height: 40px; border-radius: 50%; flex: none;
+    background: var(--brand-ink); color: var(--brand); display: grid; place-items: center;
+    font: 900 18px/1 var(--font-zh); border: 3px solid var(--lime);
+  }
+  .brand h1 { margin: 0; font-size: 19px; font-weight: 900; letter-spacing: -.01em; line-height: 1.15; }
+  .brand .sub { font-size: 12px; opacity: .85; font-weight: 700; }
+  .icon-btn {
+    border: 0; background: rgba(255,255,255,.18); color: inherit; width: 40px; height: 40px;
+    border-radius: 12px; display: grid; place-items: center; flex: none;
+  }
+  .icon-btn svg { width: 22px; height: 22px; }
+
+  .days { display: flex; gap: 6px; overflow-x: auto; padding: 12px 0 10px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .days::-webkit-scrollbar { display: none; }
+  .day {
+    flex: none; width: 46px; padding: 6px 0; border-radius: 12px; border: 0;
+    background: rgba(255,255,255,.14); color: inherit; text-align: center; line-height: 1.1;
+  }
+  .day .dow { display: block; font-size: 11px; font-weight: 700; opacity: .85; text-transform: uppercase; letter-spacing: .04em; }
+  .day .dom { display: block; font-size: 18px; font-weight: 900; font-variant-numeric: tabular-nums; }
+  .day.today .dow::after { content: " •"; }
+  .day.on { background: var(--brand-ink); color: var(--brand); }
+
+  /* ---------- body ---------- */
+  .wrap { max-width: 560px; margin: 0 auto; padding: 14px 16px calc(24px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 14px; }
+
+  .meals { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; background: var(--panel-2); padding: 4px; border-radius: 14px; }
+  .meal { border: 0; background: transparent; padding: 8px 2px; border-radius: 11px; font-weight: 800; font-size: 13px; color: var(--ink-2); line-height: 1.1; }
+  .meal small { display: block; font-size: 11px; font-weight: 700; opacity: .8; }
+  .meal.on { background: var(--panel); color: var(--brand-deep); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+  .section-head h2 { margin: 0; font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+  .section-head .theme { font-size: 12px; font-weight: 800; color: var(--brand-deep); background: var(--panel-2); padding: 2px 8px; border-radius: 999px; }
+
+  .dishes { display: grid; gap: 8px; }
+  .dish {
+    width: 100%; text-align: left; border: 2px solid var(--line); background: var(--panel);
+    border-radius: var(--radius); padding: 12px 14px; display: grid; gap: 3px; transition: border-color .15s, transform .08s;
+  }
+  .dish:active { transform: scale(.99); }
+  .dish.on { border-color: var(--brand); background: var(--panel); box-shadow: var(--shadow); }
+  .dish .zh { font-size: 18px; font-weight: 700; line-height: 1.25; }
+  .dish .en { font-size: 14px; color: var(--ink-2); }
+  .dish .stat { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; color: var(--ink-3); margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .dish .stat .bar { flex: 1; height: 5px; border-radius: 3px; background: var(--panel-2); overflow: hidden; }
+  .dish .stat .bar i { display: block; height: 100%; background: var(--brand); }
+  .dish .stat .g { color: var(--good); } .dish .stat .b { color: var(--bad); }
+  .empty { color: var(--ink-3); text-align: center; padding: 20px 0; }
+
+  /* ---------- rating sheet ---------- */
+  .sheet { scroll-margin-top: 140px; background: var(--panel); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px; display: grid; gap: 14px; }
+  .sheet .picked { display: grid; gap: 2px; padding-bottom: 12px; border-bottom: 1px dashed var(--line); }
+  .sheet .picked .k { font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+  .sheet .picked .zh { font-size: 20px; font-weight: 700; }
+  .sheet .picked .en { color: var(--ink-2); font-size: 14px; }
+  label.f { display: grid; gap: 6px; font-size: 12px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+  .verdict { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .v {
+    border: 2px solid var(--line); background: var(--panel); border-radius: 14px; padding: 12px 8px;
+    display: grid; justify-items: center; gap: 2px; font-weight: 900; font-size: 16px; color: var(--ink-2);
+  }
+  .v .emo { font-size: 26px; line-height: 1; }
+  .v small { font-size: 12px; font-weight: 700; opacity: .8; }
+  .v.good.on { border-color: var(--good); background: var(--good-soft); color: var(--good); }
+  .v.bad.on { border-color: var(--bad); background: var(--bad-soft); color: var(--bad); }
+
+  .score { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; }
+  .score .big { font-size: 40px; font-weight: 900; line-height: 1; font-variant-numeric: tabular-nums; color: var(--brand-deep); min-width: 2.2ch; text-align: right; }
+  .score .big small { font-size: 14px; color: var(--ink-3); font-weight: 800; }
+  input[type=range] { width: 100%; accent-color: var(--brand); height: 32px; }
+  .presets { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip { border: 1px solid var(--line); background: var(--panel-2); color: var(--ink-2); border-radius: 999px; padding: 4px 10px; font-size: 13px; font-weight: 800; }
+
+  .input { width: 100%; border: 2px solid var(--line); background: var(--panel); border-radius: 12px; padding: 10px 12px; font-size: 16px; text-transform: none; letter-spacing: 0; font-weight: 600; color: var(--ink); }
+  textarea.input { min-height: 72px; resize: vertical; }
+
+  .btn { border: 0; border-radius: 14px; padding: 14px; font-size: 16px; font-weight: 900; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .btn.primary { background: var(--brand); color: var(--brand-ink); }
+  .btn.primary:disabled { opacity: .5; cursor: default; }
+  .btn.wa { background: var(--wa); color: #062B12; }
+  .btn.ghost { background: var(--panel-2); color: var(--ink-2); }
+  .btn svg { width: 20px; height: 20px; }
+  .actions { display: grid; gap: 8px; }
+  .note { font-size: 12px; color: var(--ink-3); }
+  .note.warn { color: var(--bad); font-weight: 700; }
+
+  /* ---------- log ---------- */
+  .log { display: grid; gap: 8px; }
+  .entry { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; }
+  .entry .emo { font-size: 22px; }
+  .entry .t { display: grid; gap: 1px; min-width: 0; }
+  .entry .t .zh { font-weight: 700; }
+  .entry .t .m { font-size: 12px; color: var(--ink-3); font-weight: 700; }
+  .entry .t .c { font-size: 13px; color: var(--ink-2); white-space: pre-wrap; }
+  .entry .s { font-weight: 900; font-size: 18px; font-variant-numeric: tabular-nums; }
+  .entry .s.g { color: var(--good); } .entry .s.b { color: var(--bad); }
+  .entry .s small { font-size: 11px; color: var(--ink-3); }
+  .entry .pending { font-size: 11px; color: var(--bad); font-weight: 800; }
+
+  /* ---------- install hint ---------- */
+  .install { background: var(--panel); border: 2px solid var(--lime); border-radius: var(--radius); padding: 12px 14px; display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+  .install img { width: 44px; height: 44px; border-radius: 12px; }
+  .install .t { display: grid; gap: 2px; min-width: 0; font-size: 13px; color: var(--ink-2); }
+  .install .t b { font-size: 15px; color: var(--ink); }
+  .install .t kbd { font: inherit; font-weight: 800; color: var(--brand-deep); }
+  .install .x { border: 0; background: transparent; color: var(--ink-3); font-size: 22px; line-height: 1; padding: 4px; }
+  .install .btn { padding: 8px 12px; font-size: 14px; }
+
+  /* ---------- toast & settings ---------- */
+  .toast { position: fixed; left: 16px; right: 16px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 20; background: var(--ink); color: var(--ground); border-radius: 14px; padding: 12px 14px; font-weight: 700; box-shadow: var(--shadow); text-align: center; }
+  .modal { position: fixed; inset: 0; z-index: 30; background: rgba(0,0,0,.45); display: grid; align-items: end; }
+  .modal .card { background: var(--panel); border-radius: 22px 22px 0 0; padding: 18px 16px calc(18px + env(safe-area-inset-bottom, 0px)); max-height: 88vh; overflow: auto; display: grid; gap: 14px; max-width: 560px; width: 100%; margin: 0 auto; }
+  .modal h2 { margin: 0; font-size: 20px; font-weight: 900; }
+  .modal h3 { margin: 0; font-size: 14px; font-weight: 900; color: var(--brand-deep); }
+  .modal ol { margin: 0; padding-left: 20px; font-size: 14px; color: var(--ink-2); display: grid; gap: 4px; }
+  .modal code { background: var(--panel-2); padding: 1px 5px; border-radius: 5px; font-size: 13px; }
+  .status { font-size: 13px; font-weight: 700; padding: 8px 10px; border-radius: 10px; background: var(--panel-2); color: var(--ink-2); }
+  .status.ok { background: var(--good-soft); color: var(--good); }
+  .status.no { background: var(--bad-soft); color: var(--bad); }
+</style>
+
+<!-- ============ MENU DATA (regenerate with: python extract_menu.py "<menu.pdf>") ============ -->
+<script id="menu-data" type="application/json">
+{"week":"14 - 20 Sep 2026","days":[{"date":"2026-09-14","weekday":"Mon","theme":"Green Monday","meals":{"Breakfast":[{"en":"Pho with Vietnamese Sausage in Soup","zh":"扎肉湯檬粉"}],"Lunch":[{"en":"Pork Soup with Snow Fungus and Pear","zh":"雪梨雪耳豬骨湯"},{"en":"Mapo Tofu","zh":"麻婆豆腐"},{"en":"Sweet and Sour Chicken","zh":"咕嚕雞"},{"en":"Red Dates Sweet Soup with Wolfberry and Peach Gum","zh":"紅棗杞子桃膠糖水"}],"Dinner":[{"en":"Pork Soup with Snow Fungus and Pear","zh":"雪梨雪耳豬骨湯"},{"en":"Mapo Tofu","zh":"麻婆豆腐"},{"en":"Steamed chicken feet and pork ribs","zh":"鳳爪蒸排骨"},{"en":"Red Dates Sweet Soup with Wolfberry and Peach Gum","zh":"紅棗杞子桃膠糖水"}],"Supper":[{"en":"Hard Boiled Egg","zh":"烚蛋"},{"en":"Macaroni Soup with Char Siu","zh":"叉燒湯通粉"}]}},{"date":"2026-09-15","weekday":"Tue","theme":"Western","meals":{"Breakfast":[{"en":"Hard Boiled Egg","zh":"烚蛋"},{"en":"Macaroni Soup with Char Siu","zh":"叉燒湯通粉"}],"Lunch":[{"en":"Cream of Mushroom Soup","zh":"磨菇忌廉湯"},{"en":"Stir-fried Broccoli and Cauliflower with Garlic and Butter","zh":"蒜茸牛油雙花"},{"en":"Braised Beef with Red Wine","zh":"紅洒燴牛腩"},{"en":"Cheese Cake","zh":"芝士餅"}],"Dinner":[{"en":"Cream of Mushroom Soup","zh":"磨菇忌廉湯"},{"en":"Stir-fried Broccoli and Cauliflower with Garlic and Butter","zh":"蒜茸牛油雙花"},{"en":"Braised Chicken Fillets in Portuguese Sauce","zh":"葡汁燴雞球"},{"en":"Cheese Cake","zh":"芝士餅"}],"Supper":[{"en":"Dumplings with Wonton Noodles","zh":"水餃湯生麵"}]}},{"date":"2026-09-16","weekday":"Wed","theme":"Jewellery","meals":{"Breakfast":[{"en":"Dumplings with Wonton Noodles","zh":"水餃湯生麵"}],"Lunch":[{"en":"Fish Soup with Azuki Bean and Kudzu","zh":"粉葛赤小豆煲魚湯"},{"en":"Braised Hairy Gourd with Bean Vermicelli and Dried Small Shrimps","zh":"蝦米粉絲煮節瓜"},{"en":"Black Pepper Chicken Leg","zh":"黑椒燒雞脾"},{"en":"Apple","zh":"富士蘋果"}],"Dinner":[{"en":"Dace Fish Soup with Azuki Bean and Kudzu","zh":"粉葛赤小豆煲魚湯"},{"en":"Braised Hairy Gourd with Bean Vermicelli and Dried Small Shrimps","zh":"蝦米粉絲煮節瓜"},{"en":"Fried Egg with Chinese Chive and BBQ Pork","zh":"韮黃叉燒炒蛋"},{"en":"Apple","zh":"富士蘋果"}],"Supper":[{"en":"Instant Noodle Soup with Spicy Pork Dice","zh":"五香肉丁湯公仔麵"}]}},{"date":"2026-09-17","weekday":"Thu","theme":"Jewellery","meals":{"Breakfast":[{"en":"Instant Noodle Soup with Spicy Pork Dice","zh":"五香肉丁湯公仔麵"}],"Lunch":[{"en":"Hericium Mushroom and Corn Pork Shank Soup","zh":"猴頭菇粟米豬踭湯"},{"en":"Stir-fried Sweet Peas with Dried Silver Fish and Cashews","zh":"腰果銀魚乾甜豆"},{"en":"Pork Patty with Salted Egg","zh":"鹹蛋蒸肉餅"},{"en":"Ice Cream","zh":"雪糕"}],"Dinner":[{"en":"Hericium Mushroom and Corn Pork Shank Soup","zh":"猴頭菇粟米豬踭湯"},{"en":"Stir-fried Sweet Peas with Dried Silver Fish and Cashews","zh":"腰果銀魚乾甜豆"},{"en":"Spring Onion Chicken Steak","zh":"蔥油雞扒"},{"en":"Ice cream","zh":"雪糕"}],"Supper":[{"en":"Cantonese Sampan Congee","zh":"艇仔粥"},{"en":"Dim Sum","zh":"點心"}]}},{"date":"2026-09-18","weekday":"Fri","theme":"Jewellery","meals":{"Breakfast":[{"en":"Cantonese Sampan Congee","zh":"艇仔粥"},{"en":"Dim Sum","zh":"點心"}],"Lunch":[{"en":"Pork Spare Ribs Soup with Lotus Root and Octopus","zh":"蓮藕章魚豬骨湯"},{"en":"Stir-fried Pig Blood Curd and Lettuce in Sa Cha Sauce","zh":"沙茶豬紅生菜"},{"en":"Sweetcorn with Chicken","zh":"粟米雞球"},{"en":"Banana","zh":"香蕉"}],"Dinner":[{"en":"Pork Spare Ribs Soup with Lotus Root and Octopus","zh":"蓮藕章魚豬骨湯"},{"en":"Stir-fried Pig Blood Curd and Lettuce in Sa Cha Sauce","zh":"沙茶豬紅生菜"},{"en":"Spare Ribs with Plum Sauce","zh":"冰梅骨"},{"en":"Banana","zh":"香蕉"}],"Supper":[{"en":"Japanese Soup with Char Siu Udon","zh":"日式叉燒湯烏冬"}]}},{"date":"2026-09-19","weekday":"Sat","theme":"Jewellery","meals":{"Breakfast":[{"en":"Japanese Soup with Char Siu Udon","zh":"日式叉燒湯烏冬"}],"Lunch":[{"en":"Pork Spare Ribs Soup with Carrot and Chinese Cabbages","zh":"甘筍大白菜煲唐排湯"},{"en":"Stir-Fried Prawns with Cucumber and Preserved Radish","zh":"青瓜醬炒菜甫蝦仁"},{"en":"Steamed Pork with Preserved Black Olives","zh":"欖角蒸豬肉"},{"en":"Orange","zh":"香橙"}],"Dinner":[{"en":"Pork Spare Ribs Soup with Carrot and Chinese Cabbages","zh":"甘筍大白菜煲唐排湯"},{"en":"Stir-Fried Prawns with Cucumber and Preserved Radish","zh":"青瓜醬炒菜甫蝦仁"},{"en":"Sand Ginger Chicken Wing","zh":"沙薑雞翼"},{"en":"Orange","zh":"香橙"}],"Supper":[{"en":"Wonton Shanghai Noodles","zh":"雲吞湯上海麵"}]}},{"date":"2026-09-20","weekday":"Sun","theme":"Jewellery","meals":{"Breakfast":[{"en":"Wonton Shanghai Noodles","zh":"雲吞湯上海麵"}],"Lunch":[{"en":"Pork Spare Ribs Soup with Watercress and Dried Duck Gizzard","zh":"陳腎西洋菜豬骨湯"},{"en":"Stir-fried Beef with Cabbage in Black Bean Sauce","zh":"豉椒牛肉椰菜"},{"en":"Steamed Egg with Dried Shrimp and Minced Pork","zh":"蝦米肉碎蒸水蛋"},{"en":"Pear","zh":"蜜梨"}],"Dinner":[{"en":"Pork Spare Ribs Soup with Watercress and Dried Duck Gizzard","zh":"陳腎西洋菜豬骨湯"},{"en":"Stir-fried Beef with Cabbage in Black Bean Sauce","zh":"豉椒牛肉椰菜"},{"en":"Steamed Pork Ribs with Fermented Black Beans and Bean Curd Puffs","zh":"豉汁豆卜蒸排骨"},{"en":"Pear","zh":"蜜梨"}],"Supper":[{"en":"Fish Ball & Cuttlefish Ball Vermicelli","zh":"雙丸湯米粉"}]}}]}
+</script>
+
+<!-- ============ GOOGLE SHEET CONFIG ============
+  The database is the Google Sheet "Together Rating DB" (tab "Ratings"). A small Apps Script attached
+  to it is deployed as a web app; the app POSTs each rating to it and GETs the day's ratings back.
+  If the script is ever redeployed under a new URL, update apiUrl here (or in ⚙ Settings on a phone).
+-->
+<script>
+  const CONFIG = {
+    apiUrl: "https://script.google.com/macros/s/AKfycby_on4s_4w1KrxNkI5-qxKlOnkPnSTTohanp3yYPeFGfTq1l_U9gLCbmMB_anpdq0Bd/exec",
+    sheetUrl: "https://docs.google.com/spreadsheets/d/SHEET-ID-REDACTED/edit"
+  };
+</script>
+
+<header class="top">
+  <div class="top-row">
+    <div class="brand">
+      <div class="mark zh">聚</div>
+      <div>
+        <h1>Today Together Rating</h1>
+        <div class="sub" id="week-label">Together canteen</div>
+      </div>
+    </div>
+    <button class="icon-btn" id="btn-settings" aria-label="Settings" title="Settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+    </button>
+  </div>
+  <div class="days" id="days" role="tablist" aria-label="Day"></div>
+</header>
+
+<main class="wrap">
+  <div class="install" id="install" hidden>
+    <img src="icons/icon-192.png" alt="">
+    <div class="t"><b>Install as an app</b><span id="install-how"></span></div>
+    <button class="btn primary" id="install-btn" hidden>Install</button>
+    <button class="x" id="install-x" aria-label="Dismiss">×</button>
+  </div>
+  <div class="meals" id="meals" role="tablist" aria-label="Meal"></div>
+
+  <section>
+    <div class="section-head">
+      <h2 id="menu-title">Menu</h2>
+      <span class="theme" id="theme" hidden></span>
+    </div>
+    <div class="dishes" id="dishes" style="margin-top:8px"></div>
+  </section>
+
+  <section class="sheet" id="sheet" hidden>
+    <div class="picked">
+      <span class="k">Rating 評分</span>
+      <span class="zh" id="p-zh"></span>
+      <span class="en" id="p-en"></span>
+    </div>
+
+    <label class="f">Verdict 好唔好食
+      <div class="verdict">
+        <button type="button" class="v good" id="v-good" aria-pressed="false"><span class="emo">👍</span>Good<small>好食</small></button>
+        <button type="button" class="v bad" id="v-bad" aria-pressed="false"><span class="emo">👎</span>Not Good<small>唔好食</small></button>
+      </div>
+    </label>
+
+    <label class="f" for="score">Score 分數 (0–100)
+      <div class="score">
+        <input type="range" id="score" min="0" max="100" step="1" value="70">
+        <div class="big"><span id="score-out">70</span><small>/100</small></div>
+      </div>
+      <div class="presets" id="presets"></div>
+    </label>
+
+    <label class="f" for="comment">Comment 意見
+      <textarea class="input" id="comment" placeholder="e.g. soup was great, chicken a bit dry…"></textarea>
+    </label>
+
+    <label class="f" for="name">Your name 姓名
+      <input class="input" id="name" placeholder="Name" autocomplete="name">
+    </label>
+
+    <div class="actions">
+      <button class="btn primary" id="btn-submit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        Submit rating
+      </button>
+      <button class="btn wa" id="btn-share-one">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+        Share this rating to WhatsApp
+      </button>
+      <div class="note" id="submit-note"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2 id="log-title">My ratings today</h2>
+      <button class="chip" id="btn-clear-log" type="button">Clear</button>
+    </div>
+    <div class="log" id="log" style="margin-top:8px"></div>
+    <div class="actions" style="margin-top:10px">
+      <button class="btn wa" id="btn-share-all" hidden>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+        Share today's ratings to WhatsApp
+      </button>
+    </div>
+  </section>
+</main>
+
+<div class="modal" id="modal" hidden>
+  <div class="card">
+    <h2>Settings</h2>
+    <div class="status" id="cfg-status"></div>
+
+    <h3>Google Sheet (the database)</h3>
+    <div class="note">Ratings are saved to the Google Sheet <b>Together Rating DB</b> through its Apps Script web app. Only change this if the script is redeployed under a new URL.</div>
+    <input class="input" id="cfg-api" placeholder="https://script.google.com/macros/s/…/exec">
+    <a class="btn ghost" id="cfg-sheet" href="#" target="_blank" rel="noopener">Open the Google Sheet</a>
+
+    <div class="actions">
+      <button class="btn primary" id="cfg-save">Save</button>
+      <button class="btn ghost" id="cfg-close">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const MEALS = ["Breakfast", "Lunch", "Dinner", "Supper"];
+  const MEAL_ZH = { Breakfast: "早餐", Lunch: "午餐", Dinner: "晚餐", Supper: "宵夜" };
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+  };
+
+  const MENU = JSON.parse($("menu-data").textContent || '{"days":[]}');
+  const todayIso = new Date().toLocaleDateString("en-CA"); // yyyy-mm-dd, local time
+  const state = {
+    date: (MENU.days.find(d => d.date === todayIso) || MENU.days[0] || {}).date,
+    meal: mealByClock(),
+    dish: null, verdict: null, score: 70,
+    results: null
+  };
+
+  function mealByClock() {
+    const h = new Date().getHours() + new Date().getMinutes() / 60;
+    return h < 10.5 ? "Breakfast" : h < 15 ? "Lunch" : h < 20.5 ? "Dinner" : "Supper";
+  }
+  function day() { return MENU.days.find(d => d.date === state.date); }
+  function fmtDate(iso) { const [y, m, d] = iso.split("-"); return `${+d}/${+m}`; }
+  function dow(iso) { return new Date(iso + "T12:00:00").toLocaleDateString("en", { weekday: "short" }); }
+
+  /* ---------- config ---------- */
+  function config() {
+    const saved = store.get("ttr_cfg", null) || {};
+    return { apiUrl: saved.apiUrl || CONFIG.apiUrl, sheetUrl: CONFIG.sheetUrl };
+  }
+  function configReady(c) { return /^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(c.apiUrl || ""); }
+
+  /* ---------- rendering ---------- */
+  function renderDays() {
+    $("week-label").textContent = MENU.week ? `Together canteen · ${MENU.week}` : "Together canteen";
+    $("days").innerHTML = "";
+    for (const d of MENU.days) {
+      const b = document.createElement("button");
+      b.className = "day" + (d.date === state.date ? " on" : "") + (d.date === todayIso ? " today" : "");
+      b.setAttribute("role", "tab"); b.setAttribute("aria-selected", d.date === state.date);
+      b.innerHTML = `<span class="dow">${dow(d.date)}</span><span class="dom">${d.date.slice(-2).replace(/^0/, "")}</span>`;
+      b.onclick = () => { state.date = d.date; state.dish = null; state.results = null; renderAll(); loadResults(); };
+      $("days").appendChild(b);
+    }
+  }
+  function renderMeals() {
+    $("meals").innerHTML = "";
+    for (const m of MEALS) {
+      const b = document.createElement("button");
+      b.className = "meal" + (m === state.meal ? " on" : "");
+      b.setAttribute("role", "tab"); b.setAttribute("aria-selected", m === state.meal);
+      b.innerHTML = `${m}<small class="zh">${MEAL_ZH[m]}</small>`;
+      b.onclick = () => { state.meal = m; state.dish = null; renderAll(); };
+      $("meals").appendChild(b);
+    }
+  }
+  function renderDishes() {
+    const d = day();
+    const items = d ? (d.meals[state.meal] || []) : [];
+    $("menu-title").textContent = d ? `${dow(d.date)} ${fmtDate(d.date)} · ${state.meal} ${MEAL_ZH[state.meal]}` : "Menu";
+    $("theme").hidden = !(d && d.theme); $("theme").textContent = d ? d.theme : "";
+    const box = $("dishes"); box.innerHTML = "";
+    if (!items.length) { box.innerHTML = `<div class="empty">No menu for this meal.</div>`; return; }
+    items.forEach((it, i) => {
+      const b = document.createElement("button");
+      b.className = "dish" + (state.dish === i ? " on" : "");
+      b.innerHTML = `<span class="zh">${esc(it.zh)}</span><span class="en">${esc(it.en)}</span>`;
+      const r = resultFor(it);
+      if (r) b.insertAdjacentHTML("beforeend",
+        `<span class="stat"><span class="g">👍 ${r.good}</span><span class="b">👎 ${r.bad}</span><span class="bar"><i style="width:${r.avg}%"></i></span><span>${r.avg}/100 · ${r.n} rating${r.n === 1 ? "" : "s"}</span></span>`);
+      b.onclick = () => { state.dish = i; state.verdict = null; renderAll(); $("sheet").scrollIntoView({ behavior: "smooth", block: "start" }); };
+      box.appendChild(b);
+    });
+  }
+  function renderSheet() {
+    const d = day(); const it = d && state.dish != null ? d.meals[state.meal][state.dish] : null;
+    $("sheet").hidden = !it;
+    if (!it) return;
+    $("p-zh").textContent = it.zh; $("p-en").textContent = it.en;
+    $("v-good").classList.toggle("on", state.verdict === "Good"); $("v-good").setAttribute("aria-pressed", state.verdict === "Good");
+    $("v-bad").classList.toggle("on", state.verdict === "Not Good"); $("v-bad").setAttribute("aria-pressed", state.verdict === "Not Good");
+    $("score").value = state.score; $("score-out").textContent = state.score;
+    const c = config();
+    $("submit-note").className = "note" + (configReady(c) ? "" : " warn");
+    $("submit-note").textContent = configReady(c) ? "Saved to the Together Rating DB Google Sheet." : "Google Sheet not connected — tap ⚙ to set the web app URL. WhatsApp sharing still works.";
+  }
+  function renderLog() {
+    const all = store.get("ttr_log", []).filter(e => e.date === state.date);
+    $("log-title").textContent = state.date === todayIso ? "My ratings today" : `My ratings · ${fmtDate(state.date)}`;
+    const box = $("log"); box.innerHTML = "";
+    if (!all.length) box.innerHTML = `<div class="empty">Nothing rated yet — pick a dish above.</div>`;
+    for (const e of all.slice().reverse()) {
+      const g = e.rating === "Good";
+      box.insertAdjacentHTML("beforeend", `<div class="entry">
+        <span class="emo">${g ? "👍" : "👎"}</span>
+        <span class="t"><span class="zh">${esc(e.zh)}</span><span class="m">${e.meal} · ${esc(e.en)}${e.pending ? ' · <span class="pending">not sent</span>' : ""}</span>${e.comment ? `<span class="c">“${esc(e.comment)}”</span>` : ""}</span>
+        <span class="s ${g ? "g" : "b"}">${e.score}<small>/100</small></span></div>`);
+    }
+    $("btn-share-all").hidden = !all.length;
+    $("btn-clear-log").hidden = !all.length;
+  }
+  function renderAll() { renderDays(); renderMeals(); renderDishes(); renderSheet(); renderLog(); }
+  function esc(s) { return String(s ?? "").replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch])); }
+
+  /* ---------- rating form ---------- */
+  $("v-good").onclick = () => { state.verdict = "Good"; if (state.score < 50) state.score = 75; renderSheet(); };
+  $("v-bad").onclick = () => { state.verdict = "Not Good"; if (state.score >= 50) state.score = 35; renderSheet(); };
+  $("score").oninput = (e) => { state.score = +e.target.value; $("score-out").textContent = state.score; };
+  for (const p of [20, 40, 60, 80, 100]) {
+    const b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.textContent = p;
+    b.onclick = () => { state.score = p; renderSheet(); };
+    $("presets").appendChild(b);
+  }
+  $("name").value = store.get("ttr_name", "");
+  $("name").onchange = () => store.set("ttr_name", $("name").value.trim());
+
+  function currentEntry() {
+    const d = day(); const it = d.meals[state.meal][state.dish];
+    return {
+      ts: new Date().toISOString(), date: d.date, weekday: dow(d.date), meal: state.meal,
+      zh: it.zh, en: it.en, rating: state.verdict, score: state.score,
+      comment: $("comment").value.trim(), name: $("name").value.trim()
+    };
+  }
+  function validate() {
+    if (state.dish == null) return "Pick a dish first.";
+    if (!state.verdict) return "Tap 👍 Good or 👎 Not Good.";
+    if (!$("name").value.trim()) { $("name").focus(); return "Please enter your name."; }
+    return null;
+  }
+
+  const SUBMIT_HTML = $("btn-submit").innerHTML;
+  $("btn-submit").onclick = async () => {
+    const err = validate(); if (err) return toast(err);
+    const e = currentEntry(); const c = config();
+    const btn = $("btn-submit"); btn.disabled = true; btn.textContent = "Sending…";
+    e.pending = true;
+    if (configReady(c)) e.pending = !(await postRating(c, e));
+    const log = store.get("ttr_log", []); log.push(e); store.set("ttr_log", log);
+    store.set("ttr_name", e.name);
+    btn.disabled = false; btn.innerHTML = SUBMIT_HTML;
+    toast(e.pending ? "Saved on this phone — will retry sending later." : "Rating saved — thank you! 多謝");
+    $("comment").value = ""; state.verdict = null; state.score = 70; state.dish = null;
+    renderAll();
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    if (!e.pending) loadResults();
+  };
+
+  // Apps Script web app: a text/plain POST needs no CORS preflight; it answers {ok:true} after a redirect.
+  async function postRating(c, e) {
+    try {
+      const res = await fetch(c.apiUrl, {
+        method: "POST", body: JSON.stringify({
+          date: e.date, meal: e.meal, food: `${e.en} ${e.zh}`.trim(), rating: e.rating,
+          score: e.score, comment: e.comment, name: e.name
+        })
+      });
+      const j = await res.json();
+      return !!j.ok;
+    } catch (err) { console.warn("send failed", err); return false; }
+  }
+
+  // ratings that could not be sent (e.g. offline) are retried on the next visit
+  async function flushPending() {
+    const c = config(); if (!configReady(c)) return;
+    const log = store.get("ttr_log", []); let changed = false;
+    for (const e of log) if (e.pending && await postRating(c, e)) { e.pending = false; changed = true; }
+    if (changed) { store.set("ttr_log", log); renderLog(); loadResults(); }
+  }
+
+  /* ---------- WhatsApp ---------- */
+  function waText(entries) {
+    const first = entries[0];
+    const lines = [`🍽️ *Today Together Rating*`, `📅 ${first.weekday} ${fmtDate(first.date)}`];
+    for (const e of entries) {
+      lines.push("", `${e.rating === "Good" ? "👍 Good 好食" : "👎 Not Good 唔好食"} · *${e.score}/100*`,
+        `🥘 ${e.meal}: ${e.zh} ${e.en}`);
+      if (e.comment) lines.push(`💬 ${e.comment}`);
+    }
+    const names = [...new Set(entries.map(e => e.name).filter(Boolean))];
+    if (names.length) lines.push("", `— ${names.join(", ")}`);
+    return lines.join("\n");
+  }
+  function shareWA(text) { window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank"); }
+  $("btn-share-one").onclick = () => {
+    const err = validate(); if (err) return toast(err);
+    shareWA(waText([currentEntry()]));
+  };
+  $("btn-share-all").onclick = () => {
+    const all = store.get("ttr_log", []).filter(e => e.date === state.date);
+    if (all.length) shareWA(waText(all));
+  };
+  $("btn-clear-log").onclick = () => {
+    store.set("ttr_log", store.get("ttr_log", []).filter(e => e.date !== state.date)); renderLog();
+  };
+
+  /* ---------- results (everyone's ratings for the selected day, read from the Sheet) ---------- */
+  function resultFor(it) {
+    if (!state.results) return null;
+    const rows = state.results.filter(r => r.date === state.date && r.meal === state.meal && String(r.food).startsWith(it.en));
+    if (!rows.length) return null;
+    const good = rows.filter(r => r.rating === "Good").length;
+    const avg = Math.round(rows.reduce((s, r) => s + (+r.score || 0), 0) / rows.length);
+    return { n: rows.length, good, bad: rows.length - good, avg };
+  }
+  async function loadResults() {
+    const c = config(); if (!configReady(c) || !state.date) return;
+    const date = state.date;
+    try {
+      const res = await fetch(`${c.apiUrl}?date=${encodeURIComponent(date)}`, { cache: "no-store" });
+      const rows = await res.json();
+      if (state.date !== date) return; // user moved to another day meanwhile
+      state.results = Array.isArray(rows) ? rows : [];
+      renderDishes();
+    } catch (err) { console.warn("results not loaded", err); }
+  }
+
+  /* ---------- settings ---------- */
+  function openSettings() {
+    const c = config(); const ok = configReady(c);
+    $("cfg-status").className = "status " + (ok ? "ok" : "no");
+    $("cfg-status").textContent = ok ? "Connected to the Together Rating DB sheet." : "Google Sheet not connected — ratings stay on this phone only.";
+    $("cfg-api").value = c.apiUrl || "";
+    $("cfg-sheet").href = c.sheetUrl;
+    $("modal").hidden = false;
+  }
+  $("btn-settings").onclick = openSettings;
+  $("cfg-close").onclick = () => { $("modal").hidden = true; };
+  $("modal").onclick = (e) => { if (e.target === $("modal")) $("modal").hidden = true; };
+  $("cfg-save").onclick = () => {
+    const url = $("cfg-api").value.trim();
+    if (url && !configReady({ apiUrl: url })) return toast("That doesn't look like an Apps Script web app URL (…/exec).");
+    store.set("ttr_cfg", url && url !== CONFIG.apiUrl ? { apiUrl: url } : {});
+    $("modal").hidden = true;
+    toast("Settings saved.");
+    state.results = null; renderAll(); loadResults(); flushPending();
+  };
+
+  let toastTimer;
+  function toast(msg) {
+    let t = document.querySelector(".toast");
+    if (!t) { t = document.createElement("div"); t.className = "toast"; document.body.appendChild(t); }
+    t.textContent = msg; t.hidden = false;
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.hidden = true; }, 2800);
+  }
+
+  /* ---------- install (PWA) ---------- */
+  const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+  const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) && !window.MSStream;
+  let installEvt = null;
+  function showInstall(how) {
+    if (standalone || store.get("ttr_install_dismissed", false)) return;
+    $("install-how").innerHTML = how; $("install").hidden = false;
+  }
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault(); installEvt = e;
+    $("install-btn").hidden = false;
+    showInstall("Get a home-screen icon and full-screen view.");
+  });
+  $("install-btn").onclick = async () => { if (!installEvt) return; installEvt.prompt(); await installEvt.userChoice; $("install").hidden = true; };
+  $("install-x").onclick = () => { $("install").hidden = true; store.set("ttr_install_dismissed", true); };
+  if (isIOS) showInstall("In Safari tap <kbd>Share</kbd> ⬆︎ then <kbd>Add to Home Screen</kbd>.");
+  if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+    navigator.serviceWorker.register("sw.js").catch((err) => console.warn("sw", err));
+  }
+
+  renderAll();
+  loadResults();
+  flushPending();
+})();
+</script>
