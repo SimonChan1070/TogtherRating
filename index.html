@@ -121,6 +121,16 @@
   .dish .stat .bar { flex: 1; height: 5px; border-radius: 3px; background: var(--panel-2); overflow: hidden; }
   .dish .stat .bar i { display: block; height: 100%; background: var(--brand); }
   .dish .stat .g { color: var(--good); } .dish .stat .b { color: var(--bad); }
+  .dish .cmts { display: grid; gap: 3px; margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--ink-2); }
+  .dish .cmts .who { font-weight: 800; color: var(--ink); }
+  .dish .cmts .more { color: var(--ink-3); font-weight: 700; font-size: 12px; }
+  .others { display: grid; gap: 6px; }
+  .others .k { font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+  .others .row { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: start; padding: 8px 10px; background: var(--panel-2); border-radius: 10px; font-size: 14px; }
+  .others .row .who { font-weight: 800; }
+  .others .row .c { color: var(--ink-2); white-space: pre-wrap; }
+  .others .row .s { font-weight: 900; font-variant-numeric: tabular-nums; }
+  .others .row .s.g { color: var(--good); } .others .row .s.b { color: var(--bad); }
   .empty { color: var(--ink-3); text-align: center; padding: 20px 0; }
 
   /* ---------- rating sheet ---------- */
@@ -183,9 +193,6 @@
   .install .btn { padding: 8px 12px; font-size: 14px; }
 
   /* ---------- image share preview ---------- */
-  .share-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .share-row .btn { padding: 12px 8px; font-size: 14px; }
-  .btn.img { background: var(--panel-2); color: var(--brand-deep); border: 2px solid var(--lime); }
   .img-modal .card { align-content: start; }
   .img-modal img { width: 100%; height: auto; border-radius: 14px; box-shadow: var(--shadow); background: #fff; }
   .img-modal .note { text-align: center; }
@@ -215,8 +222,7 @@
 -->
 <script>
   const CONFIG = {
-    apiUrl: "https://script.google.com/macros/s/AKfycby_on4s_4w1KrxNkI5-qxKlOnkPnSTTohanp3yYPeFGfTq1l_U9gLCbmMB_anpdq0Bd/exec",
-    sheetUrl: "https://docs.google.com/spreadsheets/d/SHEET-ID-REDACTED/edit"
+    apiUrl: "https://script.google.com/macros/s/AKfycby_on4s_4w1KrxNkI5-qxKlOnkPnSTTohanp3yYPeFGfTq1l_U9gLCbmMB_anpdq0Bd/exec"
   };
 </script>
 
@@ -260,6 +266,8 @@
       <span class="en" id="p-en"></span>
     </div>
 
+    <div class="others" id="others" hidden></div>
+
     <label class="f">Verdict 好唔好食
       <div class="verdict">
         <button type="button" class="v good" id="v-good" aria-pressed="false"><span class="emo">👍</span>Good<small>好食</small></button>
@@ -288,16 +296,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
         Submit rating
       </button>
-      <div class="share-row">
-        <button class="btn wa" id="btn-share-one">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
-          Share text
-        </button>
-        <button class="btn img" id="btn-image-one">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-8 8"/></svg>
-          Share as image
-        </button>
-      </div>
+      <button class="btn wa" id="btn-image-one">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+        Share to WhatsApp as image
+      </button>
       <div class="note" id="submit-note"></div>
     </div>
   </section>
@@ -309,16 +311,10 @@
     </div>
     <div class="log" id="log" style="margin-top:8px"></div>
     <div class="actions" style="margin-top:10px">
-      <div class="share-row" id="share-all-row" hidden>
-        <button class="btn wa" id="btn-share-all">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
-          Share today as text
-        </button>
-        <button class="btn img" id="btn-image-all">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-8 8"/></svg>
-          Share today as image
-        </button>
-      </div>
+      <button class="btn wa" id="btn-image-all" hidden>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.4-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+        Share today's ratings to WhatsApp
+      </button>
     </div>
   </section>
 </main>
@@ -341,10 +337,10 @@
     <h2>Settings</h2>
     <div class="status" id="cfg-status"></div>
 
-    <h3>Google Sheet (the database)</h3>
-    <div class="note">Ratings are saved to the Google Sheet <b>Together Rating DB</b> through its Apps Script web app. Only change this if the script is redeployed under a new URL.</div>
-    <input class="input" id="cfg-api" placeholder="https://script.google.com/macros/s/…/exec">
-    <a class="btn ghost" id="cfg-sheet" href="#" target="_blank" rel="noopener">Open the Google Sheet</a>
+    <details>
+      <summary class="note">Advanced: rating service URL</summary>
+      <input class="input" id="cfg-api" placeholder="https://script.google.com/macros/s/…/exec" style="margin-top:8px">
+    </details>
 
     <div class="actions">
       <button class="btn primary" id="cfg-save">Save</button>
@@ -383,7 +379,7 @@
   /* ---------- config ---------- */
   function config() {
     const saved = store.get("ttr_cfg", null) || {};
-    return { apiUrl: saved.apiUrl || CONFIG.apiUrl, sheetUrl: CONFIG.sheetUrl };
+    return { apiUrl: saved.apiUrl || CONFIG.apiUrl };
   }
   function configReady(c) { return /^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(c.apiUrl || ""); }
 
@@ -423,8 +419,17 @@
       b.className = "dish" + (state.dish === i ? " on" : "");
       b.innerHTML = `<span class="zh">${esc(it.zh)}</span><span class="en">${esc(it.en)}</span>`;
       const r = resultFor(it);
-      if (r) b.insertAdjacentHTML("beforeend",
-        `<span class="stat"><span class="g">👍 ${r.good}</span><span class="b">👎 ${r.bad}</span><span class="bar"><i style="width:${r.avg}%"></i></span><span>${r.avg}/100 · ${r.n} rating${r.n === 1 ? "" : "s"}</span></span>`);
+      if (r) {
+        b.insertAdjacentHTML("beforeend",
+          `<span class="stat"><span class="g">👍 ${r.good}</span><span class="b">👎 ${r.bad}</span><span class="bar"><i style="width:${r.avg}%"></i></span><span>${r.avg}/100 · ${r.n} rating${r.n === 1 ? "" : "s"}</span></span>`);
+        const withText = r.rows.filter(x => x.comment);
+        if (withText.length) {
+          const shown = withText.slice(0, 2).map(x =>
+            `<span>${x.rating === "Good" ? "👍" : "👎"} <span class="who">${esc(x.name || "Anonymous")}</span> · ${esc(x.comment)}</span>`).join("");
+          const more = withText.length > 2 ? `<span class="more">+${withText.length - 2} more — tap to read all</span>` : "";
+          b.insertAdjacentHTML("beforeend", `<span class="cmts">${shown}${more}</span>`);
+        }
+      }
       b.onclick = () => { state.dish = i; state.verdict = null; renderAll(); $("sheet").scrollIntoView({ behavior: "smooth", block: "start" }); };
       box.appendChild(b);
     });
@@ -434,12 +439,16 @@
     $("sheet").hidden = !it;
     if (!it) return;
     $("p-zh").textContent = it.zh; $("p-en").textContent = it.en;
+    const r = resultFor(it);
+    $("others").hidden = !r;
+    if (r) $("others").innerHTML = `<span class="k">Everyone's ratings · ${r.n}</span>` + r.rows.map(x =>
+      `<div class="row"><span>${x.rating === "Good" ? "👍" : "👎"}</span><span><span class="who">${esc(x.name || "Anonymous")}</span>${x.comment ? `<br><span class="c">${esc(x.comment)}</span>` : ""}</span><span class="s ${x.rating === "Good" ? "g" : "b"}">${x.score}</span></div>`).join("");
     $("v-good").classList.toggle("on", state.verdict === "Good"); $("v-good").setAttribute("aria-pressed", state.verdict === "Good");
     $("v-bad").classList.toggle("on", state.verdict === "Not Good"); $("v-bad").setAttribute("aria-pressed", state.verdict === "Not Good");
     $("score").value = state.score; $("score-out").textContent = state.score;
     const c = config();
     $("submit-note").className = "note" + (configReady(c) ? "" : " warn");
-    $("submit-note").textContent = configReady(c) ? "Saved to the Together Rating DB Google Sheet." : "Google Sheet not connected — tap ⚙ to set the web app URL. WhatsApp sharing still works.";
+    $("submit-note").textContent = configReady(c) ? "Your rating and comment will be visible to everyone." : "Not connected — the rating stays on this phone. Image sharing still works.";
   }
   function renderLog() {
     const all = store.get("ttr_log", []).filter(e => e.date === state.date);
@@ -453,7 +462,7 @@
         <span class="t"><span class="zh">${esc(e.zh)}</span><span class="m">${e.meal} · ${esc(e.en)}${e.pending ? ' · <span class="pending">not sent</span>' : ""}</span>${e.comment ? `<span class="c">“${esc(e.comment)}”</span>` : ""}</span>
         <span class="s ${g ? "g" : "b"}">${e.score}<small>/100</small></span></div>`);
     }
-    $("share-all-row").hidden = !all.length;
+    $("btn-image-all").hidden = !all.length;
     $("btn-clear-log").hidden = !all.length;
   }
   function renderAll() { renderDays(); renderMeals(); renderDishes(); renderSheet(); renderLog(); }
@@ -525,28 +534,6 @@
     if (changed) { store.set("ttr_log", log); renderLog(); loadResults(); }
   }
 
-  /* ---------- WhatsApp ---------- */
-  function waText(entries) {
-    const first = entries[0];
-    const lines = [`🍽️ *Today Together Rating*`, `📅 ${first.weekday} ${fmtDate(first.date)}`];
-    for (const e of entries) {
-      lines.push("", `${e.rating === "Good" ? "👍 Good 好食" : "👎 Not Good 唔好食"} · *${e.score}/100*`,
-        `🥘 ${e.meal}: ${e.zh} ${e.en}`);
-      if (e.comment) lines.push(`💬 ${e.comment}`);
-    }
-    const names = [...new Set(entries.map(e => e.name).filter(Boolean))];
-    if (names.length) lines.push("", `— ${names.join(", ")}`);
-    return lines.join("\n");
-  }
-  function shareWA(text) { window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank"); }
-  $("btn-share-one").onclick = () => {
-    const err = validate(); if (err) return toast(err);
-    shareWA(waText([currentEntry()]));
-  };
-  $("btn-share-all").onclick = () => {
-    const all = store.get("ttr_log", []).filter(e => e.date === state.date);
-    if (all.length) shareWA(waText(all));
-  };
   /* ---------- image card (canvas → PNG → share sheet) ---------- */
   const C = { green: "#5FA83A", deep: "#2E6B2A", lime: "#C9E56B", ink: "#1B2617", ink2: "#4F5E48", ink3: "#8A9782",
               line: "#D8E2CF", good: "#3E9E4A", bad: "#D6553F", ground: "#F4F7F0", panel: "#FFFFFF" };
@@ -668,11 +655,12 @@
   /* ---------- results (everyone's ratings for the selected day, read from the Sheet) ---------- */
   function resultFor(it) {
     if (!state.results) return null;
-    const rows = state.results.filter(r => r.date === state.date && r.meal === state.meal && String(r.food).startsWith(it.en));
+    const rows = state.results.filter(r => r.date === state.date && r.meal === state.meal && String(r.food).startsWith(it.en))
+      .slice().sort((a, b) => String(b.ts).localeCompare(String(a.ts)));   // newest first
     if (!rows.length) return null;
     const good = rows.filter(r => r.rating === "Good").length;
     const avg = Math.round(rows.reduce((s, r) => s + (+r.score || 0), 0) / rows.length);
-    return { n: rows.length, good, bad: rows.length - good, avg };
+    return { n: rows.length, good, bad: rows.length - good, avg, rows };
   }
   async function loadResults() {
     const c = config(); if (!configReady(c) || !state.date) return;
@@ -690,9 +678,8 @@
   function openSettings() {
     const c = config(); const ok = configReady(c);
     $("cfg-status").className = "status " + (ok ? "ok" : "no");
-    $("cfg-status").textContent = ok ? "Connected to the Together Rating DB sheet." : "Google Sheet not connected — ratings stay on this phone only.";
+    $("cfg-status").textContent = ok ? "Connected — ratings are shared with everyone." : "Not connected — ratings stay on this phone only.";
     $("cfg-api").value = c.apiUrl || "";
-    $("cfg-sheet").href = c.sheetUrl;
     $("modal").hidden = false;
   }
   $("btn-settings").onclick = openSettings;
