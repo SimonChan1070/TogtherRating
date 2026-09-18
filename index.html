@@ -114,9 +114,19 @@
   .summary .tile b { font-size: 22px; font-weight: 900; font-variant-numeric: tabular-nums; color: var(--brand-deep); }
   .summary .tile span { font-size: 11px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-3); }
   .feed { display: grid; gap: 12px; }
-  .feed .meal-h { font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); margin-top: 4px; }
-  .feed .fdish { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; display: grid; gap: 8px; }
-  .feed .fdish .head { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: baseline; }
+  .feed details { display: block; }
+  .feed summary { list-style: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .feed summary::-webkit-details-marker { display: none; }
+  .feed .chev { width: 18px; height: 18px; flex: none; color: var(--ink-3); transition: transform .15s; }
+  .feed details[open] > summary .chev { transform: rotate(90deg); }
+  .feed .fmeal > summary { display: flex; align-items: center; gap: 8px; padding: 8px 4px; font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); margin-top: 4px; }
+  .feed .fmeal > summary .cnt { margin-left: auto; font-weight: 800; color: var(--brand-deep); background: var(--panel-2); padding: 2px 8px; border-radius: 999px; letter-spacing: 0; text-transform: none; }
+  .feed .fmeal .dishes-in { display: grid; gap: 8px; }
+  .feed .fdish { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; display: block; }
+  .feed .fdish > summary { display: grid; gap: 8px; }
+  .feed .fdish .head { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; }
+  .feed .fdish[open] .others { margin-top: 8px; }
+  .feed-tools { display: flex; gap: 6px; }
   .feed .fdish .zh { font-size: 17px; font-weight: 700; }
   .feed .fdish .en { font-size: 13px; color: var(--ink-2); }
   .feed .fdish .avg { font-size: 22px; font-weight: 900; font-variant-numeric: tabular-nums; color: var(--brand-deep); }
@@ -274,7 +284,10 @@
   <div class="view" id="all-view" hidden>
     <div class="section-head">
       <h2 id="all-title">All ratings</h2>
-      <button class="chip" id="btn-refresh" type="button">Refresh</button>
+      <div class="feed-tools">
+        <button class="chip" id="btn-toggle-all" type="button">Collapse all</button>
+        <button class="chip" id="btn-refresh" type="button">Refresh</button>
+      </div>
     </div>
     <div class="summary" id="summary" hidden>
       <div class="tile"><b id="sum-n">0</b><span>ratings</span></div>
@@ -550,26 +563,53 @@
     $("sum-avg").textContent = Math.round(rows.reduce((a, r) => a + (+r.score || 0), 0) / rows.length);
     $("sum-good").textContent = Math.round(good / rows.length * 100) + "%";
     $("summary").hidden = false;
+    const CHEV = `<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>`;
     for (const meal of MEALS) {
       const inMeal = rows.filter(r => r.meal === meal);
       if (!inMeal.length) continue;
-      feed.insertAdjacentHTML("beforeend", `<div class="meal-h">${meal} ${MEAL_ZH[meal]}</div>`);
-      // group by dish, keep menu order where possible
+      // group by dish
       const groups = new Map();
       for (const r of inMeal) { const key = (dishFor(r.food) || {}).en || String(r.food); if (!groups.has(key)) groups.set(key, []); groups.get(key).push(r); }
-      for (const [key, list] of groups) {
+      const dishes = [...groups].map(([key, list]) => {
         const it = dishFor(list[0].food) || { en: key, zh: "" };
         const g = list.filter(r => r.rating === "Good").length;
         const avg = Math.round(list.reduce((a, r) => a + (+r.score || 0), 0) / list.length);
         const sorted = list.slice().sort((a, b) => String(b.ts).localeCompare(String(a.ts)));
-        feed.insertAdjacentHTML("beforeend", `<div class="fdish">
-          <div class="head"><div><div class="zh">${esc(it.zh || it.en)}</div>${it.zh ? `<div class="en">${esc(it.en)}</div>` : ""}</div><div class="avg">${avg}<small>/100</small></div></div>
-          <div class="stat"><span class="g">👍 ${g}</span><span class="b">👎 ${list.length - g}</span><span class="bar"><i style="width:${avg}%"></i></span><span>${list.length} rating${list.length === 1 ? "" : "s"}</span></div>
+        const open = feedOpen.dish[`${meal}|${key}`] !== false;
+        return `<details class="fdish" data-key="${esc(meal + "|" + key)}"${open ? " open" : ""}>
+          <summary>
+            <div class="head">${CHEV}<div><div class="zh">${esc(it.zh || it.en)}</div>${it.zh ? `<div class="en">${esc(it.en)}</div>` : ""}</div><div class="avg">${avg}<small>/100</small></div></div>
+            <div class="stat"><span class="g">👍 ${g}</span><span class="b">👎 ${list.length - g}</span><span class="bar"><i style="width:${avg}%"></i></span><span>${list.length} rating${list.length === 1 ? "" : "s"}</span></div>
+          </summary>
           <div class="others">${sorted.map(x => `<div class="row"><span>${x.rating === "Good" ? "👍" : "👎"}</span><span><span class="who">${esc(x.name || "Anonymous")}</span>${x.comment ? `<br><span class="c">${esc(x.comment)}</span>` : ""}</span><span class="s ${x.rating === "Good" ? "g" : "b"}">${x.score}</span></div>`).join("")}</div>
-        </div>`);
-      }
+        </details>`;
+      }).join("");
+      const mopen = feedOpen.meal[meal] !== false;
+      feed.insertAdjacentHTML("beforeend", `<details class="fmeal" data-key="${meal}"${mopen ? " open" : ""}>
+        <summary>${CHEV}${meal} <span class="zh">${MEAL_ZH[meal]}</span><span class="cnt">${inMeal.length}</span></summary>
+        <div class="dishes-in">${dishes}</div>
+      </details>`);
     }
+    updateToggleLabel();
   }
+  // remember what the user collapsed so a refresh doesn't undo it
+  const feedOpen = { meal: {}, dish: {} };
+  $("feed").addEventListener("toggle", (e) => {
+    const d = e.target; if (!(d instanceof HTMLDetailsElement)) return;
+    (d.classList.contains("fmeal") ? feedOpen.meal : feedOpen.dish)[d.dataset.key] = d.open;
+    updateToggleLabel();
+  }, true);
+  function updateToggleLabel() {
+    const all = [...$("feed").querySelectorAll("details")];
+    $("btn-toggle-all").hidden = !all.length;
+    $("btn-toggle-all").textContent = all.some(d => d.open) ? "Collapse all" : "Expand all";
+  }
+  $("btn-toggle-all").onclick = () => {
+    const all = [...$("feed").querySelectorAll("details")];
+    const open = !all.some(d => d.open);
+    for (const d of all) { d.open = open; (d.classList.contains("fmeal") ? feedOpen.meal : feedOpen.dish)[d.dataset.key] = open; }
+    updateToggleLabel();
+  };
   function esc(s) { return String(s ?? "").replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch])); }
 
   /* ---------- rating form ---------- */

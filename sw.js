@@ -1,6 +1,6 @@
 // Service worker: caches the app shell so the menu opens instantly / offline.
 // index.html is fetched network-first so a newly published menu shows up as soon as there is signal.
-const CACHE = "ttr-v4";
+const CACHE = "ttr-v5";
 const SHELL = ["./", "./index.html", "./manifest.webmanifest",
   "./icons/icon-192.png", "./icons/icon-512.png", "./icons/icon-512-maskable.png", "./icons/apple-touch-icon.png"];
 
