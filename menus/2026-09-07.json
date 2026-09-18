@@ -1,0 +1,414 @@
+{
+  "week": "7 - 13 Sep 2026",
+  "days": [
+    {
+      "date": "2026-09-07",
+      "weekday": "Mon",
+      "theme": "Green Monday",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Rice Vermicelli Soup with Pork and Preserved Vegetable",
+            "zh": "雪菜肉絲湯米"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Imitation Shark Fin Soup",
+            "zh": "港式碗仔翅"
+          },
+          {
+            "en": "Scrambled Eggs with Tomatoes and Onion",
+            "zh": "蕃茄洋蔥炒蛋"
+          },
+          {
+            "en": "Crispy Honey Chicken wing",
+            "zh": "蜜糖脆雞翼"
+          },
+          {
+            "en": "Black Bean Soup",
+            "zh": "黑豆水"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Imitation Shark Fin Soup",
+            "zh": "港式碗仔翅"
+          },
+          {
+            "en": "Scrambled Eggs with Tomatoes and Onion",
+            "zh": "蕃茄洋蔥炒蛋"
+          },
+          {
+            "en": "Thousand Island Spare Ribs",
+            "zh": "千島金沙骨"
+          },
+          {
+            "en": "Black Bean Soup",
+            "zh": "黑豆水"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Scramble Egg",
+            "zh": "烚蛋"
+          },
+          {
+            "en": "Macaroni Soup with Ham and Tomato",
+            "zh": "火腿蕃茄湯通粉"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-08",
+      "weekday": "Tue",
+      "theme": "Thai Food",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Scramble Egg",
+            "zh": "烚蛋"
+          },
+          {
+            "en": "Macaroni Soup with Ham and Tomato",
+            "zh": "火腿蕃茄湯通粉"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Thai Style Tofu Minced Pork Soup with Vermicelli",
+            "zh": "粉絲肉碎豆腐湯"
+          },
+          {
+            "en": "Fried Water Spinach in Belacan",
+            "zh": "馬拉盞炒通菜"
+          },
+          {
+            "en": "Thai Style Pork Jowl",
+            "zh": "泰式燒豬頸肉"
+          },
+          {
+            "en": "Black Glutinous Rice Coconut Pudding",
+            "zh": "椰汁紫米糕"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Thai Style Tofu Minced Pork Soup with Vermicelli",
+            "zh": "粉絲肉碎豆腐湯"
+          },
+          {
+            "en": "Fried Water Spinach in Belacan",
+            "zh": "馬拉盞炒通菜"
+          },
+          {
+            "en": "Thai Style Fish Cake",
+            "zh": "泰式魚餅"
+          },
+          {
+            "en": "Black Glutinous Rice Coconut Pudding",
+            "zh": "椰汁紫米糕"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Chicken Congee",
+            "zh": "滑雞粥"
+          },
+          {
+            "en": "Rice Noodle Roll with Sesame",
+            "zh": "芝麻腸粉"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-09",
+      "weekday": "Wed",
+      "theme": "Belt & Road BIOHK",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Chicken Congee",
+            "zh": "滑雞粥"
+          },
+          {
+            "en": "Rice Noodle Roll with Sesame",
+            "zh": "芝麻腸粉"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Pork Soup with Chinese Pok Choy and Carrot",
+            "zh": "白菜甘筍煲豬骨湯"
+          },
+          {
+            "en": "Hong Kong-Style Curry Fish Balls with Pork Skin and Radish",
+            "zh": "咖喱豬皮蘿蔔魚蛋"
+          },
+          {
+            "en": "Fish Fillet with Sweetcorn",
+            "zh": "粟米魚柳"
+          },
+          {
+            "en": "Ice Cream",
+            "zh": "雪糕"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Pork Soup with Chinese Pok Choy and Carrot",
+            "zh": "白菜甘筍煲豬骨湯"
+          },
+          {
+            "en": "Hong Kong-Style Curry Fish Balls with Pork Skin and Radish",
+            "zh": "咖喱豬皮蘿蔔魚蛋"
+          },
+          {
+            "en": "Fried Eggs with Chives and Clams",
+            "zh": "九菜蜆肉煎蛋"
+          },
+          {
+            "en": "Ice Cream",
+            "zh": "雪糕"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Stir-fried Sliver Pin Noodles with Mixed Ingredients",
+            "zh": "三絲炒油麵"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-10",
+      "weekday": "Thu",
+      "theme": "Belt & Road BIOHK",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Stir-fried Sliver Pin Noodles with Mixed Ingredients",
+            "zh": "三絲炒油麵"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Chayote and Lentil Soup with Pork Shank",
+            "zh": "合掌瓜扁豆煲豬展湯"
+          },
+          {
+            "en": "Braised Hairy Gourd with Bean Vermicelli and Dried Small Shrimps",
+            "zh": "節瓜粉絲蝦米"
+          },
+          {
+            "en": "Scallion Pork Chop",
+            "zh": "蔥油豬扒"
+          },
+          {
+            "en": "Banana",
+            "zh": "香蕉"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Chayote and Lentil Soup with Pork Shank",
+            "zh": "合掌瓜扁豆煲豬展湯"
+          },
+          {
+            "en": "Braised Hairy Gourd with Bean Vermicelli and Dried Small Shrimps",
+            "zh": "節瓜粉絲蝦米"
+          },
+          {
+            "en": "Steamed Chicken with Red Dates and Black Fungus",
+            "zh": "紅棗雲耳蒸雞"
+          },
+          {
+            "en": "Banana",
+            "zh": "香蕉"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Instant Noodle Soup with Satay Pork",
+            "zh": "沙嗲肉片湯公仔麵"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-11",
+      "weekday": "Fri",
+      "theme": "BIOHK",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Instant Noodle Soup with Satay Pork",
+            "zh": "沙嗲肉片湯公仔麵"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Tomato, Potato and Pork Soup Stir-fried Cauliflower with Dried Small Shrimp and Garlic",
+            "zh": "蕃茄薯仔豬骨湯"
+          },
+          {
+            "en": "Sauteed Beef Short Ribs, Capsicum Honey Sauce",
+            "zh": "蒜茸蝦米炒椰菜花"
+          },
+          {
+            "en": "Braised Vegetables with Red Fermented Beancurd",
+            "zh": "蜜椒牛仔骨南乳齋"
+          },
+          {
+            "en": "Orange",
+            "zh": "香橙"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Tomato, Potato and Pork Soup",
+            "zh": "蕃茄薯仔豬骨湯"
+          },
+          {
+            "en": "Stir-fried Cauliflower with Dried Small Shrimp and Garlic",
+            "zh": "蒜茸蝦米炒椰菜花"
+          },
+          {
+            "en": "Braised Vegetables with Red Fermented Beancurd",
+            "zh": "紅燒豬軟骨南乳齋"
+          },
+          {
+            "en": "Orange",
+            "zh": "香橙"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Spinach Noodle Soup with Pork Dumpling",
+            "zh": "水餃湯菠菜麵"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-12",
+      "weekday": "Sat",
+      "theme": "BIOHK",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Spinach Noodle Soup with Pork Dumpling",
+            "zh": "水餃湯菠菜麵"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Pork Soup with Chinese Cereus",
+            "zh": "霸王花煲豬骨湯"
+          },
+          {
+            "en": "Choy Sum with Mixed Mushroom",
+            "zh": "雜菌扒菜心"
+          },
+          {
+            "en": "Pork Patty with Salted Egg",
+            "zh": "鹹蛋蒸肉餅"
+          },
+          {
+            "en": "Watercress honey",
+            "zh": "西洋菜蜜"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Pork Soup with Chinese Cereus",
+            "zh": "霸王花煲豬骨湯"
+          },
+          {
+            "en": "Choy Sum with Mixed Mushroom",
+            "zh": "雜菌扒菜心"
+          },
+          {
+            "en": "Braised Chicken with Potatoes",
+            "zh": "薯仔炆雞球"
+          },
+          {
+            "en": "watercress honey",
+            "zh": "西洋菜蜜"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Vermicelli with Cuttlefish",
+            "zh": "冬菜墨魚丸"
+          },
+          {
+            "en": "Balls and Preserved Vegetable",
+            "zh": "湯米粉"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-13",
+      "weekday": "Sun",
+      "theme": "",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Vermicelli with Cuttlefish",
+            "zh": "冬菜墨魚丸"
+          },
+          {
+            "en": "Balls and Preserved Vegetable",
+            "zh": "湯米粉"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Pork Soup with Mustard Green and Salty Egg",
+            "zh": "芥菜咸蛋肉片湯"
+          },
+          {
+            "en": "Taiwanese Minced Pork with Chinese Cabbage",
+            "zh": "台式肉燥小棠菜"
+          },
+          {
+            "en": "Steamed Egg w Dried Scallop & Dried Small Shrimp",
+            "zh": "元貝蝦米蒸水蛋"
+          },
+          {
+            "en": "Apple",
+            "zh": "蘋果"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Pork Soup with Mustard Green and Salty Egg",
+            "zh": "芥菜咸蛋肉片湯"
+          },
+          {
+            "en": "Taiwanese Minced Pork with Chinese Cabbage",
+            "zh": "台式肉燥小棠菜"
+          },
+          {
+            "en": "Pork Cubes with Sweetcorn",
+            "zh": "粟米肉粒"
+          },
+          {
+            "en": "Apple",
+            "zh": "蘋果"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Pho with Vietnamese Sausage in Soup",
+            "zh": "扎肉湯檬粉"
+          }
+        ]
+      }
+    }
+  ]
+}

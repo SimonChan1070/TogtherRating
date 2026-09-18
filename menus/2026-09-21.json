@@ -1,0 +1,442 @@
+{
+  "week": "21 - 27 Sep 2026",
+  "days": [
+    {
+      "date": "2026-09-21",
+      "weekday": "Mon",
+      "theme": "Green Monday",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Fish ball &Beef ball Noodle",
+            "zh": "雙丸湯米粉"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Pork Spare Ribs Soup with Carrot and Chinese Cabbages",
+            "zh": "大白菜甘筍豬骨湯"
+          },
+          {
+            "en": "Stir-fried Choy Sum with Garlic and Straw Mushroom",
+            "zh": "草菇蒜子浸菜心"
+          },
+          {
+            "en": "Marinated Chicken Wing",
+            "zh": "鹵水雞翼"
+          },
+          {
+            "en": "Black Sesame Sweet Soup",
+            "zh": "芝麻糊"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Pork Spare Ribs Soup with Carrot and Chinese Cabbages",
+            "zh": "大白菜甘筍豬骨湯"
+          },
+          {
+            "en": "Stir-fried Choy Sum with Garlic and Straw Mushroom",
+            "zh": "草菇蒜子浸菜心"
+          },
+          {
+            "en": "Braised Pork Belly",
+            "zh": "東波肉"
+          },
+          {
+            "en": "Black Sesame Sweet Soup",
+            "zh": "芝麻糊"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Japanese Char Siu Udon with Pork Soup",
+            "zh": "日式叉燒烏冬豬骨濃湯"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-22",
+      "weekday": "Tue",
+      "theme": "Japanese",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Japanese Char Siu Udon with Pork Soup",
+            "zh": "日式叉燒烏冬豬骨濃湯"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Japanese Miso soup with Tofu",
+            "zh": "豆腐昆布面豉湯"
+          },
+          {
+            "en": "Japanese mixed vegetables",
+            "zh": "關東雜菜煮"
+          },
+          {
+            "en": "Karaage-style fried fish",
+            "zh": "唐揚炸魚"
+          },
+          {
+            "en": "Mango dumpling",
+            "zh": "芒果大福"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Japanese Miso soup with Tofu",
+            "zh": "豆腐昆布面豉湯"
+          },
+          {
+            "en": "Japanese mixed vegetables",
+            "zh": "關東雜菜煮"
+          },
+          {
+            "en": "Japanese-style Beef with Velvety Eggs",
+            "zh": "日式滑蛋牛肉"
+          },
+          {
+            "en": "Mango dumpling",
+            "zh": "芒果大福"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Congee with oyster & Minced Pork",
+            "zh": "蠔豉肉碎粥"
+          },
+          {
+            "en": "Meat Vegetable Bun",
+            "zh": "菜肉飽"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-23",
+      "weekday": "Wed",
+      "theme": "",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Congee with oyster & Minced Pork",
+            "zh": "蠔豉肉碎粥"
+          },
+          {
+            "en": "Meat Vegetable Bun",
+            "zh": "菜肉飽"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Pork Soup with Chayote,Carrot & Sweet Corn",
+            "zh": "粟米佛手瓜甘筍煲排骨"
+          },
+          {
+            "en": "Braised Eggplant with Minced Pork",
+            "zh": "魚香茄子"
+          },
+          {
+            "en": "Steamed Spare Ribs with Preserved Vegetables",
+            "zh": "梅菜蒸肉排"
+          },
+          {
+            "en": "Ice cream",
+            "zh": "雪糕"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Pork Soup with Chayote,Carrot & Sweet Corn",
+            "zh": "粟米佛手瓜甘筍煲排骨"
+          },
+          {
+            "en": "Braised Eggplant with Minced Pork",
+            "zh": "魚香茄子"
+          },
+          {
+            "en": "Baked Salty Chicken Leg",
+            "zh": "鹽焗雞脾"
+          },
+          {
+            "en": "Ice cream",
+            "zh": "雪糕"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Vegetable Wonton",
+            "zh": "時菜鮮蝦雲吞湯"
+          },
+          {
+            "en": "Spinach Noodle",
+            "zh": "菠菜麵"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-24",
+      "weekday": "Thu",
+      "theme": "Pre-festive celebration",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Vegetable Wonton",
+            "zh": "時菜鮮蝦雲吞湯"
+          },
+          {
+            "en": "Spinach Noodle",
+            "zh": "菠菜麵"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Chicken Soup with Sea Whelk, Melon and Fungus",
+            "zh": "蜜瓜雪耳螺頭煲雞"
+          },
+          {
+            "en": "Scallion Oil Chicken",
+            "zh": "蔥油雞"
+          },
+          {
+            "en": "Lettuce with Mushroom",
+            "zh": "冬菇生菜"
+          },
+          {
+            "en": "Deep Fried Shrimp Roll",
+            "zh": "酥炸蝦春卷"
+          },
+          {
+            "en": "Moon Cake",
+            "zh": "月餅"
+          },
+          {
+            "en": "Pear",
+            "zh": "水晶梨"
+          },
+          {
+            "en": "Glutinous Ball with Red Bean Soup",
+            "zh": "紅豆沙湯丸糖水"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Chicken Soup with Sea Whelk, Melon and Fungus",
+            "zh": "蜜瓜雪耳螺頭煲雞"
+          },
+          {
+            "en": "Scallion Oil Chicken",
+            "zh": "蔥油雞"
+          },
+          {
+            "en": "Lettuce with Mushroom",
+            "zh": "冬菇生菜"
+          },
+          {
+            "en": "Deep Fried Shrimp Roll",
+            "zh": "酥炸蝦春卷"
+          },
+          {
+            "en": "Moon Cake",
+            "zh": "月餅"
+          },
+          {
+            "en": "Pear",
+            "zh": "水晶梨"
+          },
+          {
+            "en": "Glutinous Ball with Red Bean Soup",
+            "zh": "紅豆沙湯丸糖水"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Stir-fried Rice",
+            "zh": "韮菜銀芽"
+          },
+          {
+            "en": "Vermicelli with Chinese Leek, Bean Sprouts, Pork",
+            "zh": "肉絲炒米粉"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-25",
+      "weekday": "Fri",
+      "theme": "",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Stir-fried Rice",
+            "zh": "韮菜銀芽"
+          },
+          {
+            "en": "Vermicelli with Chinese Leek, Bean Sprouts, Pork",
+            "zh": "肉絲炒米粉"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Pork Soup with Lion's Mane Mushroom and Carrot",
+            "zh": "猴頭菇甘筍煲豬"
+          },
+          {
+            "en": "Stir-fried Chinese Leaf Lettuce with Bean Paste",
+            "zh": "麵醬炒油麥菜"
+          },
+          {
+            "en": "Stir-fried Beef and Bean Vermicelli in Sa Cha Sauce",
+            "zh": "沙茶粉絲肥牛"
+          },
+          {
+            "en": "Banana",
+            "zh": "香蕉"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Pork Soup with Lion's Mane Mushroom and Carrot",
+            "zh": "猴頭菇甘筍煲豬"
+          },
+          {
+            "en": "Stir-fried Chinese Leaf Lettuce with Bean Paste",
+            "zh": "麵醬炒油麥菜"
+          },
+          {
+            "en": "Steam Pork Ribs with Chinese Black Olive",
+            "zh": "欖角蒸豬肉"
+          },
+          {
+            "en": "Banana",
+            "zh": "香蕉"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Thick Noodles with Braised Meat Sauce Soup",
+            "zh": "炸醬湯粗麵"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-26",
+      "weekday": "Sat",
+      "theme": "",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Thick Noodles with Braised Meat Sauce Soup",
+            "zh": "炸醬湯粗麵"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Dried Bok Choi and Carrot Pork Bone Soup",
+            "zh": "菜乾甘筍豬骨湯"
+          },
+          {
+            "en": "Braised Radish with Fish Puffs and Celery",
+            "zh": "芹香魚腐炆蘿蔔"
+          },
+          {
+            "en": "Steamed Egg w Dried Scallop & Dried Small Shrimp",
+            "zh": "元貝蝦米蒸水蛋"
+          },
+          {
+            "en": "Black Bean Soup",
+            "zh": "黑豆水"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Dried Bok Choi and Carrot Pork Bone Soup",
+            "zh": "菜乾甘筍豬骨湯"
+          },
+          {
+            "en": "Braised Radish with Fish Puffs and Celery",
+            "zh": "芹香魚腐炆蘿蔔"
+          },
+          {
+            "en": "Honey Glazed Pork Spare Ribs",
+            "zh": "蜜糖醬燒骨"
+          },
+          {
+            "en": "Black Bean Soup",
+            "zh": "黑豆水"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Char Siu Instant Noodle",
+            "zh": "叉燒湯公仔麵"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-27",
+      "weekday": "Sun",
+      "theme": "",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Char Siu Instant Noodle",
+            "zh": "叉燒湯公仔麵"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Chinese Herbal Soup (Ching Po Leung) with Lean Pork",
+            "zh": "清保涼煲瘦肉湯"
+          },
+          {
+            "en": "Braised Chinese Cabbage with Diced Chicken",
+            "zh": "雞粒燴津白"
+          },
+          {
+            "en": "Steamed Pork Ribs with Dried Daylily and Cloud Ear Fungus",
+            "zh": "金針雲耳蒸排骨"
+          },
+          {
+            "en": "Orange",
+            "zh": "香橙"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Chinese Herbal Soup (Ching Po Leung) with Lean Pork",
+            "zh": "清保涼煲瘦肉湯"
+          },
+          {
+            "en": "Braised Chinese Cabbage with Diced Chicken",
+            "zh": "雞粒燴津白"
+          },
+          {
+            "en": "Foo Yung Egg",
+            "zh": "芙蓉煎蛋"
+          },
+          {
+            "en": "Orange",
+            "zh": "香橙"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Congee with Century egg &Pork Alkaline rice",
+            "zh": "皮蛋瘦肉粥"
+          },
+          {
+            "en": "Dumpling",
+            "zh": "珍珠雞"
+          }
+        ]
+      }
+    }
+  ]
+}

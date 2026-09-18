@@ -53,24 +53,31 @@ def column_bounds(page):
 
 def row_bounds(page, day_names, first_col_right):
     words = page.extract_words()
-    anchors = [w for w in words if w["text"] in day_names and w["x0"] < first_col_right]
-    anchors.sort(key=lambda w: w["top"])
-    if len(anchors) != 7:
+    # the weekday column is "Mon".."Sun" or "一".."日" - the English page has used both over time
+    for names in (day_names, ZH_DAYS, EN_DAYS):
+        anchors = [w for w in words if w["text"] in names and w["x0"] < first_col_right]
+        if len(anchors) == 7:
+            break
+    else:
         raise SystemExit(f"expected 7 day anchors, found {len(anchors)}: {[a['text'] for a in anchors]}")
+    anchors.sort(key=lambda w: w["top"])
     centers = [(a["top"] + a["bottom"]) / 2 for a in anchors]
     header_bottom = max((w["bottom"] for w in words if w["top"] < centers[0] - 60), default=0) + 2
     # the grid's vertical border rects end where the table ends; the disclaimer footer sits below that
     footer_top = max((r["bottom"] for r in page.rects if r["width"] < 2), default=page.height)
-    bounds = []
-    for i, c in enumerate(centers):
-        top = header_bottom if i == 0 else (centers[i - 1] + c) / 2
-        bot = footer_top - 2 if i == 6 else (c + centers[i + 1]) / 2
-        bounds.append((top, bot))
-    return anchors, bounds
+    # rows are separated by drawn horizontal grid lines; rows differ in height, so prefer those
+    # over the midpoints between weekday anchors (a tall row would otherwise swallow its neighbour)
+    hlines = sorted({round(r["top"]) for r in page.rects if r["height"] < 2 and r["width"] > 100
+                     and header_bottom < r["top"] < footer_top - 4})
+    if len(hlines) == 6 and all(hlines[i] < centers[i + 1] and hlines[i] > centers[i] for i in range(6)):
+        edges = [header_bottom] + hlines + [footer_top - 2]
+    else:
+        edges = [header_bottom] + [(centers[i] + centers[i + 1]) / 2 for i in range(6)] + [footer_top - 2]
+    return anchors, list(zip(edges, edges[1:]))
 
 
 def cell_lines(words, x0, x1, y0, y1):
-    """Words inside a cell, grouped into visual lines. Returns list of (text, pixel_width)."""
+    """Words inside a cell, grouped into visual lines. Returns list of (text, pixel_width, [word texts])."""
     ws = [w for w in words if x0 <= (w["x0"] + w["x1"]) / 2 < x1 and y0 <= (w["top"] + w["bottom"]) / 2 < y1]
     ws.sort(key=lambda w: (round(w["top"] / 4), w["x0"]))
     lines = []
@@ -83,26 +90,44 @@ def cell_lines(words, x0, x1, y0, y1):
     for ln in lines:
         ln["words"].sort(key=lambda w: w["x0"])
         text = " ".join(w["text"] for w in ln["words"])
-        out.append((text.strip(), ln["words"][-1]["x1"] - ln["words"][0]["x0"]))
+        out.append((text.strip(), ln["words"][-1]["x1"] - ln["words"][0]["x0"], [w["text"] for w in ln["words"]]))
     return out
 
 
 def group_zh(lines):
-    """Chinese dishes are one per line; a 1-char line is a wrapped tail of the previous line."""
+    """Chinese dishes are one per line. Two wrap shapes occur: a 1-char line is the tail of the
+    previous dish, and a short (<=2 char) word separated by a gap at the end of a line is the head
+    of the next dish, which continues on the following line ("...豬骨湯 草" / "菇蒜子浸菜心")."""
     dishes = []
-    for text, width in lines:
-        text = text.replace(" ", "")
-        if not text:
+    pending = None  # head fragment waiting for the next line
+    for text, width, words in lines:
+        words = [w for w in words if w.strip()]
+        if not words:
             continue
-        if dishes and len(text) <= 1:
+        head = None
+        if len(words) > 1 and len(words[-1]) <= 2:
+            head = words.pop()
+        text = "".join(words)
+        if pending is not None:
+            dishes.append((pending + text, width))
+            pending = None
+        elif dishes and len(text) <= 1:
             dishes[-1] = (dishes[-1][0] + text, dishes[-1][1])
         else:
             dishes.append((text, width))
+        pending = head
+    if pending is not None:
+        dishes.append((pending, 0))
     return dishes
 
 
-CONNECTIVES = ("with", "and", "in", "of", "&")
-TYPO_FIX = {"Marcaroni": "Macaroni", "Blamck": "Black"}
+# an English line ending in one of these almost certainly wrapped ("...with Dried" / "Small Shrimps")
+CONNECTIVES = {"with", "and", "in", "of", "&", "w", "chinese", "preserved", "dried", "fresh", "style", "sweet",
+               "salted", "black", "red", "small", "mixed", "minced", "bean", "fried", "braised", "steamed", "thai",
+               "japanese", "sea", "hong", "kong-style", "diced", "sliced", "coconut", "lotus"}
+GENERIC_TAILS = {"soup", "sauce", "noodle", "noodles", "rice", "vegetable", "vegetables"}
+TYPO_FIX = {"Marcaroni": "Macaroni", "Blamck": "Black", "Balck": "Black", "Prok": "Pork", "vegetbles": "vegetables",
+            "Potatos": "Potatoes"}
 THEME_DEFAULT = {"Mon": "Green Monday"}  # printed as a logo image, not text
 
 
@@ -118,27 +143,47 @@ def merge_by_width(items, need, sep=" "):
     return items
 
 
+def wrap_score(prev, cur, last):
+    """How likely it is that visual line `cur` is a continuation of `prev` (higher = more likely)."""
+    tail, head = prev.split()[-1].lower(), cur.split()[0].lower()
+    # always joined: "Hard Boiled Egg &" / "Macaroni Soup" (the caller splits "&" again if the
+    # Chinese column has two dishes) and a line starting "with"/"and"/"in" ("Instant Noodle Soup" / "with Spicy Pork")
+    if tail == "&" or head in ("with", "and", "in", "of", "&", "(") or head.startswith("("):
+        return 4
+    if tail in CONNECTIVES or tail.endswith(","):
+        return 3
+    if last and head in GENERIC_TAILS:  # "...Udon with Pork" / "Soup": "Soup" alone is never a dish
+        return 3
+    if cur[0].islower():
+        return 2
+    if len(cur.split()) == 1 and not last:  # a lone word mid-cell ("Shrimps") is usually a spill-over
+        return 1
+    return 0  # a lone LAST word is more often a fruit/dessert dish ("Banana") than a spill-over
+
+
 def group_en(lines, k):
-    """Merge N visual lines into k dishes.
-    A line starting lowercase is certainly a wrap; remaining merges go where the previous line is widest."""
-    lines = [(t, w) for t, w in lines if t]
+    """Merge N visual lines into the k dishes the Chinese column says there are.
+    Each line break gets a wrap likelihood. Near-certain wraps (score >= 3) are always merged; if
+    that still leaves more than k dishes, the next most likely breaks go too (ties: wider previous
+    line first). Ending up below k is fine - the caller splits "A & B" or merges Chinese lines."""
+    lines = [(t, w) for t, w, _ in lines if t]
     n = len(lines)
-    # certain wraps: next line starts lowercase, previous line ends with a connective,
-    # or the line is a lone word that is not the cell's last line (e.g. "Shrimps", "Kudzu")
-    merges = set()
-    for i in range(1, n):
-        prev, cur = lines[i - 1][0], lines[i][0]
-        if cur[0].islower() or prev.split()[-1].lower() in CONNECTIVES \
-                or (len(cur.split()) == 1 and i < n - 1):
-            merges.add(i)
+    if n == 0:
+        return []
+    breaks = [(wrap_score(lines[i - 1][0], lines[i][0], i == n - 1), lines[i - 1][1], i) for i in range(1, n)]
+    chosen = {i for sc, _, i in breaks if sc >= 3}
+    rest = [b for b in breaks if b[0] < 3]
+    need = n - len(chosen) - k
+    if k > 0 and need > 0:
+        chosen |= {i for _, _, i in sorted(rest, reverse=True)[:need]}
+    elif not k:
+        chosen |= {i for sc, _, i in rest if sc >= 2}
     dishes = []
     for i, (t, w) in enumerate(lines):
-        if i in merges and dishes:
+        if i in chosen and dishes:
             dishes[-1] = (dishes[-1][0] + " " + t, w)
         else:
             dishes.append((t, w))
-    if len(dishes) > k > 0:
-        dishes = merge_by_width(dishes, len(dishes) - k)
     return dishes
 
 
@@ -148,7 +193,7 @@ def parse_page(page, day_names):
     words = page.extract_words()
     days = []
     for (y0, y1) in rows:
-        date_lines = [t for t, _ in cell_lines(words, cols[0], cols[1], y0, y1)]
+        date_lines = [t for t, _, _ in cell_lines(words, cols[0], cols[1], y0, y1)]
         cells = {}
         for mi, meal in enumerate(MEALS):
             cells[meal] = cell_lines(words, cols[mi + 1], cols[mi + 2], y0, y1)
@@ -201,7 +246,7 @@ def parse_pdf(pdf_path):
         last_month = month
         theme = " ".join(t for t in en[i]["date_lines"]
                          if not re.search(r"\d", t) and "self serve" not in t.lower()
-                         and t not in EN_DAYS).strip() or THEME_DEFAULT.get(EN_DAYS[i], "")
+                         and t not in EN_DAYS and t not in ZH_DAYS).strip() or THEME_DEFAULT.get(EN_DAYS[i], "")
         meals = {}
         for meal in MEALS:
             zh_d = group_zh(zh[i]["cells"][meal])
