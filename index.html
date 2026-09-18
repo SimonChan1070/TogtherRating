@@ -930,5 +930,8 @@
     if (document.visibilityState === "hidden") hiddenAt = Date.now();
     else if (Date.now() - hiddenAt > FRESH_MS) loadAllResults();
   });
+  // while the app is open, keep the selected day live so others' ratings (and red dishes) show up
+  const POLL_MS = 60 * 1000;
+  setInterval(() => { if (document.visibilityState === "visible" && navigator.onLine !== false) loadResults(true); }, POLL_MS);
 })();
 </script>
