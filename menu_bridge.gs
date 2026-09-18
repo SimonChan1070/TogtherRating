@@ -1,5 +1,6 @@
 // Together Menu Bridge — forwards new weekly menu PDFs into the GitHub repo, where the
-// "Update menu from PDF" Action extracts them and redeploys the app.
+// "Update menu from PDF" Action extracts them into menus/<date>.json, deletes the PDF and redeploys the app.
+// (Sent files are remembered here by Drive ID / Gmail label, so a deleted PDF is not re-sent.)
 //
 // Two inputs, use either or both:
 //   • Google Drive: any PDF dropped into the folder whose ID is in script property DRIVE_FOLDER_ID

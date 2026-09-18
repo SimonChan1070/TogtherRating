@@ -85,7 +85,17 @@
   }
   .icon-btn svg { width: 22px; height: 22px; }
 
-  .days { display: flex; gap: 6px; overflow-x: auto; padding: 12px 0 10px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .weekbar { display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 10px; }
+  .wk-btn {
+    border: 0; background: rgba(255,255,255,.14); color: inherit; width: 34px; height: 30px;
+    border-radius: 10px; font-size: 20px; line-height: 1; font-weight: 900;
+  }
+  .wk-btn:disabled { opacity: .3; cursor: default; }
+  .wk-pick { position: relative; min-width: 0; }
+  .wk-pick .wk-text { display: block; padding: 5px 10px; border-radius: 10px; background: rgba(255,255,255,.14); font-size: 13px; font-weight: 800; white-space: nowrap; }
+  .wk-pick .wk-text small { font-weight: 700; opacity: .8; margin-left: 6px; }
+  .wk-pick select { position: absolute; inset: 0; width: 100%; opacity: 0; font-size: 16px; }
+  .days { display: flex; gap: 6px; overflow-x: auto; padding: 8px 0 10px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   .days::-webkit-scrollbar { display: none; }
   .day {
     flex: none; width: 46px; padding: 6px 0; border-radius: 12px; border: 0;
@@ -135,6 +145,11 @@
   .feed .fdish .stat .bar { flex: 1; height: 5px; border-radius: 3px; background: var(--panel-2); overflow: hidden; }
   .feed .fdish .stat .bar i { display: block; height: 100%; background: var(--brand); }
   .feed .fdish .stat .g { color: var(--good); } .feed .fdish .stat .b { color: var(--bad); }
+  /* average below LOW_SCORE: the dish reads as a warning */
+  .feed .fdish.low { border-color: var(--bad); background: var(--bad-soft); }
+  .feed .fdish.low .avg, .feed .fdish.low .stat .n { color: var(--bad); }
+  .feed .fdish.low .stat .bar i { background: var(--bad); }
+  .summary .tile.low b { color: var(--bad); }
   .feed .fdish .others { border-top: 1px dashed var(--line); padding-top: 8px; }
 
   .meals { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; background: var(--panel-2); padding: 4px; border-radius: 14px; }
@@ -159,6 +174,9 @@
   .dish .stat .bar { flex: 1; height: 5px; border-radius: 3px; background: var(--panel-2); overflow: hidden; }
   .dish .stat .bar i { display: block; height: 100%; background: var(--brand); }
   .dish .stat .g { color: var(--good); } .dish .stat .b { color: var(--bad); }
+  .dish.low { border-color: var(--bad); background: var(--bad-soft); }
+  .dish.low .stat .n { color: var(--bad); }
+  .dish.low .stat .bar i { background: var(--bad); }
   .dish .cmts { display: grid; gap: 3px; margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--ink-2); }
   .dish .cmts .who { font-weight: 800; color: var(--ink); }
   .dish .cmts .more { color: var(--ink-3); font-weight: 700; font-size: 12px; }
@@ -250,7 +268,7 @@
 
 <!-- ============ MENU DATA (regenerate with: python extract_menu.py "<menu.pdf>") ============ -->
 <script id="menu-data" type="application/json">
-{"week":"14 - 20 Sep 2026","days":[{"date":"2026-09-14","weekday":"Mon","theme":"Green Monday","meals":{"Breakfast":[{"en":"Pho with Vietnamese Sausage in Soup","zh":"扎肉湯檬粉"}],"Lunch":[{"en":"Pork Soup with Snow Fungus and Pear","zh":"雪梨雪耳豬骨湯"},{"en":"Mapo Tofu","zh":"麻婆豆腐"},{"en":"Sweet and Sour Chicken","zh":"咕嚕雞"},{"en":"Red Dates Sweet Soup with Wolfberry and Peach Gum","zh":"紅棗杞子桃膠糖水"}],"Dinner":[{"en":"Pork Soup with Snow Fungus and Pear","zh":"雪梨雪耳豬骨湯"},{"en":"Mapo Tofu","zh":"麻婆豆腐"},{"en":"Steamed chicken feet and pork ribs","zh":"鳳爪蒸排骨"},{"en":"Red Dates Sweet Soup with Wolfberry and Peach Gum","zh":"紅棗杞子桃膠糖水"}],"Supper":[{"en":"Hard Boiled Egg","zh":"烚蛋"},{"en":"Macaroni Soup with Char Siu","zh":"叉燒湯通粉"}]}},{"date":"2026-09-15","weekday":"Tue","theme":"Western","meals":{"Breakfast":[{"en":"Hard Boiled Egg","zh":"烚蛋"},{"en":"Macaroni Soup with Char Siu","zh":"叉燒湯通粉"}],"Lunch":[{"en":"Cream of Mushroom Soup","zh":"磨菇忌廉湯"},{"en":"Stir-fried Broccoli and Cauliflower with Garlic and Butter","zh":"蒜茸牛油雙花"},{"en":"Braised Beef with Red Wine","zh":"紅洒燴牛腩"},{"en":"Cheese Cake","zh":"芝士餅"}],"Dinner":[{"en":"Cream of Mushroom Soup","zh":"磨菇忌廉湯"},{"en":"Stir-fried Broccoli and Cauliflower with Garlic and Butter","zh":"蒜茸牛油雙花"},{"en":"Braised Chicken Fillets in Portuguese Sauce","zh":"葡汁燴雞球"},{"en":"Cheese Cake","zh":"芝士餅"}],"Supper":[{"en":"Dumplings with Wonton Noodles","zh":"水餃湯生麵"}]}},{"date":"2026-09-16","weekday":"Wed","theme":"Jewellery","meals":{"Breakfast":[{"en":"Dumplings with Wonton Noodles","zh":"水餃湯生麵"}],"Lunch":[{"en":"Fish Soup with Azuki Bean and Kudzu","zh":"粉葛赤小豆煲魚湯"},{"en":"Braised Hairy Gourd with Bean Vermicelli and Dried Small Shrimps","zh":"蝦米粉絲煮節瓜"},{"en":"Black Pepper Chicken Leg","zh":"黑椒燒雞脾"},{"en":"Apple","zh":"富士蘋果"}],"Dinner":[{"en":"Dace Fish Soup with Azuki Bean and Kudzu","zh":"粉葛赤小豆煲魚湯"},{"en":"Braised Hairy Gourd with Bean Vermicelli and Dried Small Shrimps","zh":"蝦米粉絲煮節瓜"},{"en":"Fried Egg with Chinese Chive and BBQ Pork","zh":"韮黃叉燒炒蛋"},{"en":"Apple","zh":"富士蘋果"}],"Supper":[{"en":"Instant Noodle Soup with Spicy Pork Dice","zh":"五香肉丁湯公仔麵"}]}},{"date":"2026-09-17","weekday":"Thu","theme":"Jewellery","meals":{"Breakfast":[{"en":"Instant Noodle Soup with Spicy Pork Dice","zh":"五香肉丁湯公仔麵"}],"Lunch":[{"en":"Hericium Mushroom and Corn Pork Shank Soup","zh":"猴頭菇粟米豬踭湯"},{"en":"Stir-fried Sweet Peas with Dried Silver Fish and Cashews","zh":"腰果銀魚乾甜豆"},{"en":"Pork Patty with Salted Egg","zh":"鹹蛋蒸肉餅"},{"en":"Ice Cream","zh":"雪糕"}],"Dinner":[{"en":"Hericium Mushroom and Corn Pork Shank Soup","zh":"猴頭菇粟米豬踭湯"},{"en":"Stir-fried Sweet Peas with Dried Silver Fish and Cashews","zh":"腰果銀魚乾甜豆"},{"en":"Spring Onion Chicken Steak","zh":"蔥油雞扒"},{"en":"Ice cream","zh":"雪糕"}],"Supper":[{"en":"Cantonese Sampan Congee","zh":"艇仔粥"},{"en":"Dim Sum","zh":"點心"}]}},{"date":"2026-09-18","weekday":"Fri","theme":"Jewellery","meals":{"Breakfast":[{"en":"Cantonese Sampan Congee","zh":"艇仔粥"},{"en":"Dim Sum","zh":"點心"}],"Lunch":[{"en":"Pork Spare Ribs Soup with Lotus Root and Octopus","zh":"蓮藕章魚豬骨湯"},{"en":"Stir-fried Pig Blood Curd and Lettuce in Sa Cha Sauce","zh":"沙茶豬紅生菜"},{"en":"Sweetcorn with Chicken","zh":"粟米雞球"},{"en":"Banana","zh":"香蕉"}],"Dinner":[{"en":"Pork Spare Ribs Soup with Lotus Root and Octopus","zh":"蓮藕章魚豬骨湯"},{"en":"Stir-fried Pig Blood Curd and Lettuce in Sa Cha Sauce","zh":"沙茶豬紅生菜"},{"en":"Spare Ribs with Plum Sauce","zh":"冰梅骨"},{"en":"Banana","zh":"香蕉"}],"Supper":[{"en":"Japanese Soup with Char Siu Udon","zh":"日式叉燒湯烏冬"}]}},{"date":"2026-09-19","weekday":"Sat","theme":"Jewellery","meals":{"Breakfast":[{"en":"Japanese Soup with Char Siu Udon","zh":"日式叉燒湯烏冬"}],"Lunch":[{"en":"Pork Spare Ribs Soup with Carrot and Chinese Cabbages","zh":"甘筍大白菜煲唐排湯"},{"en":"Stir-Fried Prawns with Cucumber and Preserved Radish","zh":"青瓜醬炒菜甫蝦仁"},{"en":"Steamed Pork with Preserved Black Olives","zh":"欖角蒸豬肉"},{"en":"Orange","zh":"香橙"}],"Dinner":[{"en":"Pork Spare Ribs Soup with Carrot and Chinese Cabbages","zh":"甘筍大白菜煲唐排湯"},{"en":"Stir-Fried Prawns with Cucumber and Preserved Radish","zh":"青瓜醬炒菜甫蝦仁"},{"en":"Sand Ginger Chicken Wing","zh":"沙薑雞翼"},{"en":"Orange","zh":"香橙"}],"Supper":[{"en":"Wonton Shanghai Noodles","zh":"雲吞湯上海麵"}]}},{"date":"2026-09-20","weekday":"Sun","theme":"Jewellery","meals":{"Breakfast":[{"en":"Wonton Shanghai Noodles","zh":"雲吞湯上海麵"}],"Lunch":[{"en":"Pork Spare Ribs Soup with Watercress and Dried Duck Gizzard","zh":"陳腎西洋菜豬骨湯"},{"en":"Stir-fried Beef with Cabbage in Black Bean Sauce","zh":"豉椒牛肉椰菜"},{"en":"Steamed Egg with Dried Shrimp and Minced Pork","zh":"蝦米肉碎蒸水蛋"},{"en":"Pear","zh":"蜜梨"}],"Dinner":[{"en":"Pork Spare Ribs Soup with Watercress and Dried Duck Gizzard","zh":"陳腎西洋菜豬骨湯"},{"en":"Stir-fried Beef with Cabbage in Black Bean Sauce","zh":"豉椒牛肉椰菜"},{"en":"Steamed Pork Ribs with Fermented Black Beans and Bean Curd Puffs","zh":"豉汁豆卜蒸排骨"},{"en":"Pear","zh":"蜜梨"}],"Supper":[{"en":"Fish Ball & Cuttlefish Ball Vermicelli","zh":"雙丸湯米粉"}]}}]}
+{"weeks":[{"week":"14 - 20 Sep 2026","days":[{"date":"2026-09-14","weekday":"Mon","theme":"Green Monday","meals":{"Breakfast":[{"en":"Pho with Vietnamese Sausage in Soup","zh":"扎肉湯檬粉"}],"Lunch":[{"en":"Pork Soup with Snow Fungus and Pear","zh":"雪梨雪耳豬骨湯"},{"en":"Mapo Tofu","zh":"麻婆豆腐"},{"en":"Sweet and Sour Chicken","zh":"咕嚕雞"},{"en":"Red Dates Sweet Soup with Wolfberry and Peach Gum","zh":"紅棗杞子桃膠糖水"}],"Dinner":[{"en":"Pork Soup with Snow Fungus and Pear","zh":"雪梨雪耳豬骨湯"},{"en":"Mapo Tofu","zh":"麻婆豆腐"},{"en":"Steamed chicken feet and pork ribs","zh":"鳳爪蒸排骨"},{"en":"Red Dates Sweet Soup with Wolfberry and Peach Gum","zh":"紅棗杞子桃膠糖水"}],"Supper":[{"en":"Hard Boiled Egg","zh":"烚蛋"},{"en":"Macaroni Soup with Char Siu","zh":"叉燒湯通粉"}]}},{"date":"2026-09-15","weekday":"Tue","theme":"Western","meals":{"Breakfast":[{"en":"Hard Boiled Egg","zh":"烚蛋"},{"en":"Macaroni Soup with Char Siu","zh":"叉燒湯通粉"}],"Lunch":[{"en":"Cream of Mushroom Soup","zh":"磨菇忌廉湯"},{"en":"Stir-fried Broccoli and Cauliflower with Garlic and Butter","zh":"蒜茸牛油雙花"},{"en":"Braised Beef with Red Wine","zh":"紅洒燴牛腩"},{"en":"Cheese Cake","zh":"芝士餅"}],"Dinner":[{"en":"Cream of Mushroom Soup","zh":"磨菇忌廉湯"},{"en":"Stir-fried Broccoli and Cauliflower with Garlic and Butter","zh":"蒜茸牛油雙花"},{"en":"Braised Chicken Fillets in Portuguese Sauce","zh":"葡汁燴雞球"},{"en":"Cheese Cake","zh":"芝士餅"}],"Supper":[{"en":"Dumplings with Wonton Noodles","zh":"水餃湯生麵"}]}},{"date":"2026-09-16","weekday":"Wed","theme":"Jewellery","meals":{"Breakfast":[{"en":"Dumplings with Wonton Noodles","zh":"水餃湯生麵"}],"Lunch":[{"en":"Fish Soup with Azuki Bean and Kudzu","zh":"粉葛赤小豆煲魚湯"},{"en":"Braised Hairy Gourd with Bean Vermicelli and Dried Small Shrimps","zh":"蝦米粉絲煮節瓜"},{"en":"Black Pepper Chicken Leg","zh":"黑椒燒雞脾"},{"en":"Apple","zh":"富士蘋果"}],"Dinner":[{"en":"Dace Fish Soup with Azuki Bean and Kudzu","zh":"粉葛赤小豆煲魚湯"},{"en":"Braised Hairy Gourd with Bean Vermicelli and Dried Small Shrimps","zh":"蝦米粉絲煮節瓜"},{"en":"Fried Egg with Chinese Chive and BBQ Pork","zh":"韮黃叉燒炒蛋"},{"en":"Apple","zh":"富士蘋果"}],"Supper":[{"en":"Instant Noodle Soup with Spicy Pork Dice","zh":"五香肉丁湯公仔麵"}]}},{"date":"2026-09-17","weekday":"Thu","theme":"Jewellery","meals":{"Breakfast":[{"en":"Instant Noodle Soup with Spicy Pork Dice","zh":"五香肉丁湯公仔麵"}],"Lunch":[{"en":"Hericium Mushroom and Corn Pork Shank Soup","zh":"猴頭菇粟米豬踭湯"},{"en":"Stir-fried Sweet Peas with Dried Silver Fish and Cashews","zh":"腰果銀魚乾甜豆"},{"en":"Pork Patty with Salted Egg","zh":"鹹蛋蒸肉餅"},{"en":"Ice Cream","zh":"雪糕"}],"Dinner":[{"en":"Hericium Mushroom and Corn Pork Shank Soup","zh":"猴頭菇粟米豬踭湯"},{"en":"Stir-fried Sweet Peas with Dried Silver Fish and Cashews","zh":"腰果銀魚乾甜豆"},{"en":"Spring Onion Chicken Steak","zh":"蔥油雞扒"},{"en":"Ice cream","zh":"雪糕"}],"Supper":[{"en":"Cantonese Sampan Congee","zh":"艇仔粥"},{"en":"Dim Sum","zh":"點心"}]}},{"date":"2026-09-18","weekday":"Fri","theme":"Jewellery","meals":{"Breakfast":[{"en":"Cantonese Sampan Congee","zh":"艇仔粥"},{"en":"Dim Sum","zh":"點心"}],"Lunch":[{"en":"Pork Spare Ribs Soup with Lotus Root and Octopus","zh":"蓮藕章魚豬骨湯"},{"en":"Stir-fried Pig Blood Curd and Lettuce in Sa Cha Sauce","zh":"沙茶豬紅生菜"},{"en":"Sweetcorn with Chicken","zh":"粟米雞球"},{"en":"Banana","zh":"香蕉"}],"Dinner":[{"en":"Pork Spare Ribs Soup with Lotus Root and Octopus","zh":"蓮藕章魚豬骨湯"},{"en":"Stir-fried Pig Blood Curd and Lettuce in Sa Cha Sauce","zh":"沙茶豬紅生菜"},{"en":"Spare Ribs with Plum Sauce","zh":"冰梅骨"},{"en":"Banana","zh":"香蕉"}],"Supper":[{"en":"Japanese Soup with Char Siu Udon","zh":"日式叉燒湯烏冬"}]}},{"date":"2026-09-19","weekday":"Sat","theme":"Jewellery","meals":{"Breakfast":[{"en":"Japanese Soup with Char Siu Udon","zh":"日式叉燒湯烏冬"}],"Lunch":[{"en":"Pork Spare Ribs Soup with Carrot and Chinese Cabbages","zh":"甘筍大白菜煲唐排湯"},{"en":"Stir-Fried Prawns with Cucumber and Preserved Radish","zh":"青瓜醬炒菜甫蝦仁"},{"en":"Steamed Pork with Preserved Black Olives","zh":"欖角蒸豬肉"},{"en":"Orange","zh":"香橙"}],"Dinner":[{"en":"Pork Spare Ribs Soup with Carrot and Chinese Cabbages","zh":"甘筍大白菜煲唐排湯"},{"en":"Stir-Fried Prawns with Cucumber and Preserved Radish","zh":"青瓜醬炒菜甫蝦仁"},{"en":"Sand Ginger Chicken Wing","zh":"沙薑雞翼"},{"en":"Orange","zh":"香橙"}],"Supper":[{"en":"Wonton Shanghai Noodles","zh":"雲吞湯上海麵"}]}},{"date":"2026-09-20","weekday":"Sun","theme":"Jewellery","meals":{"Breakfast":[{"en":"Wonton Shanghai Noodles","zh":"雲吞湯上海麵"}],"Lunch":[{"en":"Pork Spare Ribs Soup with Watercress and Dried Duck Gizzard","zh":"陳腎西洋菜豬骨湯"},{"en":"Stir-fried Beef with Cabbage in Black Bean Sauce","zh":"豉椒牛肉椰菜"},{"en":"Steamed Egg with Dried Shrimp and Minced Pork","zh":"蝦米肉碎蒸水蛋"},{"en":"Pear","zh":"蜜梨"}],"Dinner":[{"en":"Pork Spare Ribs Soup with Watercress and Dried Duck Gizzard","zh":"陳腎西洋菜豬骨湯"},{"en":"Stir-fried Beef with Cabbage in Black Bean Sauce","zh":"豉椒牛肉椰菜"},{"en":"Steamed Pork Ribs with Fermented Black Beans and Bean Curd Puffs","zh":"豉汁豆卜蒸排骨"},{"en":"Pear","zh":"蜜梨"}],"Supper":[{"en":"Fish Ball & Cuttlefish Ball Vermicelli","zh":"雙丸湯米粉"}]}}]}]}
 </script>
 
 <!-- ============ GOOGLE SHEET CONFIG ============
@@ -276,6 +294,11 @@
     <button class="icon-btn" id="btn-settings" aria-label="Settings" title="Settings">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
     </button>
+  </div>
+  <div class="weekbar" id="weekbar">
+    <button class="wk-btn" id="wk-prev" type="button" aria-label="Previous week">‹</button>
+    <label class="wk-pick"><span class="wk-text" id="wk-text"></span><select id="wk-select" aria-label="Week"></select></label>
+    <button class="wk-btn" id="wk-next" type="button" aria-label="Next week">›</button>
   </div>
   <div class="days" id="days" role="tablist" aria-label="Day"></div>
 </header>
@@ -421,15 +444,24 @@
   const $ = (id) => document.getElementById(id);
   const MEALS = ["Breakfast", "Lunch", "Dinner", "Supper"];
   const MEAL_ZH = { Breakfast: "早餐", Lunch: "午餐", Dinner: "晚餐", Supper: "宵夜" };
+  const LOW_SCORE = 50; // average below this shows in red (matches the 👍/👎 boundary)
   const store = {
     get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } },
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
   };
 
-  const MENU = JSON.parse($("menu-data").textContent || '{"days":[]}');
+  // menu-data holds {"weeks":[{week, days}, ...]} oldest first (older builds shipped a single {week, days})
+  const MENU_RAW = JSON.parse($("menu-data").textContent || '{"weeks":[]}');
+  const WEEKS = (MENU_RAW.weeks || (MENU_RAW.days ? [MENU_RAW] : []))
+    .filter(w => w && Array.isArray(w.days) && w.days.length)
+    .sort((a, b) => a.days[0].date.localeCompare(b.days[0].date));
   const todayIso = new Date().toLocaleDateString("en-CA"); // yyyy-mm-dd, local time
+  // default week: the one containing today; otherwise the latest week that has started (or the first if all are future)
+  const thisWeekIdx = WEEKS.findIndex(w => w.days.some(d => d.date === todayIso));
+  const startedIdx = WEEKS.map((w, i) => (w.days[0].date <= todayIso ? i : -1)).filter(i => i >= 0).pop();
   const state = {
-    date: (MENU.days.find(d => d.date === todayIso) || MENU.days[0] || {}).date,
+    week: thisWeekIdx >= 0 ? thisWeekIdx : (startedIdx ?? 0),
+    date: null,
     meal: mealByClock(),
     dish: null, verdict: null, score: 70,
     results: null, tab: "rate"
@@ -439,7 +471,27 @@
     const h = new Date().getHours() + new Date().getMinutes() / 60;
     return h < 10.5 ? "Breakfast" : h < 15 ? "Lunch" : h < 20.5 ? "Dinner" : "Supper";
   }
-  function day() { return MENU.days.find(d => d.date === state.date); }
+  function week() { return WEEKS[state.week] || { week: "", days: [] }; }
+  function days() { return week().days; }
+  function day() { return days().find(d => d.date === state.date); }
+  function weekStatus(w) {
+    if (!w.days.length) return "";
+    if (w.days.some(d => d.date === todayIso)) return "this week";
+    return w.days[w.days.length - 1].date < todayIso ? "past" : "coming";
+  }
+  // pick a day in the current week: keep the weekday the user was on, else today, else the first day
+  function pickDate(prevDate) {
+    const ds = days(); if (!ds.length) return null;
+    if (ds.some(d => d.date === todayIso) && !prevDate) return todayIso;
+    if (prevDate) { const wd = new Date(prevDate + "T12:00:00").getDay(); const same = ds.find(d => new Date(d.date + "T12:00:00").getDay() === wd); if (same) return same.date; }
+    return ds.some(d => d.date === todayIso) ? todayIso : ds[0].date;
+  }
+  function setWeek(i) {
+    if (i < 0 || i >= WEEKS.length || i === state.week) return;
+    state.week = i; state.date = pickDate(state.date); state.dish = null; state.results = null;
+    renderAll(); loadResults();
+  }
+  state.date = pickDate(null);
   function fmtDate(iso) { const [y, m, d] = iso.split("-"); return `${+d}/${+m}`; }
   function dow(iso) { return new Date(iso + "T12:00:00").toLocaleDateString("en", { weekday: "short" }); }
 
@@ -451,10 +503,25 @@
   function configReady(c) { return /^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(c.apiUrl || ""); }
 
   /* ---------- rendering ---------- */
+  function renderWeek() {
+    const w = week(), st = weekStatus(w);
+    $("wk-text").innerHTML = `${esc(w.week || "Menu")}${st ? `<small>${st === "this week" ? "本週" : st === "past" ? "past 過去" : "next 下週"}</small>` : ""}`;
+    $("wk-prev").disabled = state.week <= 0;
+    $("wk-next").disabled = state.week >= WEEKS.length - 1;
+    const sel = $("wk-select"); sel.innerHTML = "";
+    WEEKS.forEach((x, i) => {
+      const o = document.createElement("option"); o.value = i;
+      const s2 = weekStatus(x); o.textContent = `${x.week}${s2 === "this week" ? " · this week" : s2 === "coming" ? " · coming" : ""}`;
+      o.selected = i === state.week; sel.appendChild(o);
+    });
+  }
+  $("wk-prev").onclick = () => setWeek(state.week - 1);
+  $("wk-next").onclick = () => setWeek(state.week + 1);
+  $("wk-select").onchange = (e) => setWeek(+e.target.value);
+
   function renderDays() {
-    $("week-label").textContent = MENU.week ? `Together canteen · ${MENU.week}` : "Together canteen";
     $("days").innerHTML = "";
-    for (const d of MENU.days) {
+    for (const d of days()) {
       const b = document.createElement("button");
       b.className = "day" + (d.date === state.date ? " on" : "") + (d.date === todayIso ? " today" : "");
       b.setAttribute("role", "tab"); b.setAttribute("aria-selected", d.date === state.date);
@@ -483,12 +550,12 @@
     if (!items.length) { box.innerHTML = `<div class="empty">No menu for this meal.</div>`; return; }
     items.forEach((it, i) => {
       const b = document.createElement("button");
-      b.className = "dish" + (state.dish === i ? " on" : "");
-      b.innerHTML = `<span class="zh">${esc(it.zh)}</span><span class="en">${esc(it.en)}</span>`;
       const r = resultFor(it);
+      b.className = "dish" + (state.dish === i ? " on" : "") + (r && r.avg < LOW_SCORE ? " low" : "");
+      b.innerHTML = `<span class="zh">${esc(it.zh)}</span><span class="en">${esc(it.en)}</span>`;
       if (r) {
         b.insertAdjacentHTML("beforeend",
-          `<span class="stat"><span class="g">👍 ${r.good}</span><span class="b">👎 ${r.bad}</span><span class="bar"><i style="width:${r.avg}%"></i></span><span>${r.avg}/100 · ${r.n} rating${r.n === 1 ? "" : "s"}</span></span>`);
+          `<span class="stat"><span class="g">👍 ${r.good}</span><span class="b">👎 ${r.bad}</span><span class="bar"><i style="width:${r.avg}%"></i></span><span class="n">${r.avg}/100 · ${r.n} rating${r.n === 1 ? "" : "s"}</span></span>`);
         const withText = r.rows.filter(x => x.comment);
         if (withText.length) {
           const shown = withText.slice(0, 2).map(x =>
@@ -532,7 +599,7 @@
     $("btn-image-all").hidden = !all.length;
     $("btn-clear-log").hidden = !all.length;
   }
-  function renderAll() { renderDays(); renderMeals(); renderDishes(); renderSheet(); renderLog(); renderFeed(); renderTabs(); }
+  function renderAll() { renderWeek(); renderDays(); renderMeals(); renderDishes(); renderSheet(); renderLog(); renderFeed(); renderTabs(); }
 
   /* ---------- tabs ---------- */
   function renderTabs() {
@@ -560,7 +627,8 @@
     if (!rows.length) { feed.innerHTML = `<div class="empty">No ratings yet for this day — be the first!</div>`; $("summary").hidden = true; return; }
     const good = rows.filter(r => r.rating === "Good").length;
     $("sum-n").textContent = rows.length;
-    $("sum-avg").textContent = Math.round(rows.reduce((a, r) => a + (+r.score || 0), 0) / rows.length);
+    const dayAvg = Math.round(rows.reduce((a, r) => a + (+r.score || 0), 0) / rows.length);
+    $("sum-avg").textContent = dayAvg; $("sum-avg").parentElement.classList.toggle("low", dayAvg < LOW_SCORE);
     $("sum-good").textContent = Math.round(good / rows.length * 100) + "%";
     $("summary").hidden = false;
     const CHEV = `<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>`;
@@ -576,10 +644,10 @@
         const avg = Math.round(list.reduce((a, r) => a + (+r.score || 0), 0) / list.length);
         const sorted = list.slice().sort((a, b) => String(b.ts).localeCompare(String(a.ts)));
         const open = feedOpen.dish[`${meal}|${key}`] !== false;
-        return `<details class="fdish" data-key="${esc(meal + "|" + key)}"${open ? " open" : ""}>
+        return `<details class="fdish${avg < LOW_SCORE ? " low" : ""}" data-key="${esc(meal + "|" + key)}"${open ? " open" : ""}>
           <summary>
             <div class="head">${CHEV}<div><div class="zh">${esc(it.zh || it.en)}</div>${it.zh ? `<div class="en">${esc(it.en)}</div>` : ""}</div><div class="avg">${avg}<small>/100</small></div></div>
-            <div class="stat"><span class="g">👍 ${g}</span><span class="b">👎 ${list.length - g}</span><span class="bar"><i style="width:${avg}%"></i></span><span>${list.length} rating${list.length === 1 ? "" : "s"}</span></div>
+            <div class="stat"><span class="g">👍 ${g}</span><span class="b">👎 ${list.length - g}</span><span class="bar"><i style="width:${avg}%"></i></span><span class="n">${list.length} rating${list.length === 1 ? "" : "s"}</span></div>
           </summary>
           <div class="others">${sorted.map(x => `<div class="row"><span>${x.rating === "Good" ? "👍" : "👎"}</span><span><span class="who">${esc(x.name || "Anonymous")}</span>${x.comment ? `<br><span class="c">${esc(x.comment)}</span>` : ""}</span><span class="s ${x.rating === "Good" ? "g" : "b"}">${x.score}</span></div>`).join("")}</div>
         </details>`;

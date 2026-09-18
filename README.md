@@ -8,11 +8,11 @@ Mobile web app for rating the Together canteen menu. Ratings are stored in a Goo
 | File | What it is |
 |---|---|
 | `index.html` | The app. One file, no build step. Open it on a phone (host it anywhere static). |
-| `extract_menu.py` | Turns the weekly bilingual menu PDF into `menu.json` and injects it into `index.html`. |
-| `menu.json` | This week's menu (14 – 20 Sep 2026), Chinese + English, per meal. |
+| `extract_menu.py` | Imports a weekly bilingual menu PDF into `menus/<start-date>.json`, then rebuilds `menu.json` and injects it into `index.html`. |
+| `menus/` | One JSON per week (`2026-09-14.json` = the week starting that Monday), Chinese + English, per meal. Also the **inbox**: drop a PDF here and the Action imports it and deletes the PDF. |
+| `menu.json` | The last 12 weeks combined (`{"weeks": [...]}`, oldest first) — what the app ships. |
 | `manifest.webmanifest`, `sw.js`, `icons/` | PWA files: home-screen install, full-screen, offline menu. |
-| `menus/` | Weekly menu PDFs; adding one triggers the update Action. |
-| `.github/workflows/update-menu.yml` | GitHub Action: extract newest PDF → commit → Pages redeploy. |
+| `.github/workflows/update-menu.yml` | GitHub Action: import waiting PDFs → delete them → commit → Pages redeploy. |
 | `menu_bridge.gs` | Apps Script: forwards new PDFs from a Drive folder / Gmail into `menus/`. |
 | `apps_script.gs` | Source of the Apps Script web app attached to the Google Sheet (for reference / redeploy). |
 
@@ -21,8 +21,11 @@ Mobile web app for rating the Together canteen menu. Ratings are stored in a Goo
 **A. Upload the PDF on GitHub (easiest, works from a phone)**
 1. Open https://github.com/SimonChan1070/TogtherRating/tree/main/menus
 2. *Add file → Upload files* → drop the new PDF (keep the canteen's name, e.g. `Together menu on 21 - 27 Sep 2026.pdf`) → *Commit changes*.
-3. The **Update menu from PDF** Action (`.github/workflows/update-menu.yml`) extracts the newest week, rebuilds
-   `index.html` and commits; Pages redeploys ~1 min later. Check progress under the repo's *Actions* tab.
+3. The **Update menu from PDF** Action (`.github/workflows/update-menu.yml`) extracts the week into
+   `menus/<date>.json`, **deletes the PDF from the repo**, rebuilds `index.html` and commits; Pages redeploys
+   ~1 min later. Check progress under the repo's *Actions* tab.
+   Note: routes A and B commit the PDF before it is deleted, so it stays visible in the repo's git history.
+   Only route C never commits it. If that matters, use C or make the repo private (GitHub Pages then needs a paid plan).
 
 **B. Google Drive folder or Gmail (automatic)** — `menu_bridge.gs`
 A standalone Apps Script checks every 15 minutes for new PDFs in a Drive folder and/or emails with subject
@@ -35,7 +38,9 @@ pip install pdfplumber          # once
 python extract_menu.py "F:\BackUp\Together menu on 21 - 27 Sep 2026.pdf"
 git add -A && git commit -m "Menu 21-27 Sep" && git push
 ```
-The extractor prints every dish it found — glance over it against the PDF.
+The extractor prints every dish it found — glance over it against the PDF. A PDF outside `menus/` is never
+deleted (only ones inside the inbox folder are); the PDF itself is not committed, only `menus/2026-09-21.json`.
+Fix a typo by editing that JSON file and re-running `python extract_menu.py --all menus` (rebuilds with no PDF).
 
 ## The database: Google Sheet "Together Rating DB"
 
@@ -67,11 +72,14 @@ Install on phones:
 - **Android (Chrome)**: open the link → the app shows an *Install* banner (or ⋮ → *Add to Home screen*).
 - **iPhone (Safari)**: open the link → Share ⬆︎ → *Add to Home Screen*.
 
-Weekly menu update = re-run `extract_menu.py`, commit and push; installed apps pick it up on next open
-(menu is fetched network-first). If you change `sw.js`, bump `CACHE = "ttr-v2"`.
+Weekly menu update = import the PDF (see above), commit and push; installed apps pick it up on next open
+(menu is fetched network-first). Next week's menu can be imported as soon as the canteen sends it — the app
+keeps showing the current week by default and the new one appears under ›. If you change `sw.js`, bump `CACHE = "ttr-v2"`.
 
 ## What the app does
 
+- Week bar ‹ 14 – 20 Sep 2026 › (tap the label for a picker): browse past weeks and their ratings, or a coming
+  week once its menu is imported. Defaults to the week containing today. Up to 12 weeks are carried in the app.
 - Day chips (defaults to today) and Breakfast / Lunch / Dinner / Supper tabs (defaults by clock).
 - Tap a dish → 👍 Good / 👎 Not Good, score 0–100 (slider + quick presets), comment, name (remembered).
 - **Submit** saves to the Google Sheet and keeps a local copy under "My ratings today".

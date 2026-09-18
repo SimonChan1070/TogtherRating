@@ -1,7 +1,8 @@
 name: Update menu from PDF
 
-# Drop a new weekly PDF into the menus/ folder (GitHub web upload, the Drive/Gmail bridge, or git push)
-# and this extracts it, rebuilds index.html and commits — GitHub Pages then redeploys the app.
+# Drop a new weekly PDF into the menus/ folder (GitHub web upload, the Drive/Gmail bridge, or git push).
+# This extracts it into menus/<start-date>.json, deletes the PDF from the repo, rebuilds index.html
+# with the last weeks of menus and commits - GitHub Pages then redeploys the app.
 on:
   push:
     paths:
@@ -29,18 +30,18 @@ jobs:
       - name: Install extractor dependency
         run: pip install --quiet pdfplumber
 
-      - name: Extract newest menu PDF into the app
-        run: python extract_menu.py --latest menus menu.json
+      - name: Import waiting PDFs into the app (deletes them from menus/)
+        run: python extract_menu.py --all menus
 
-      - name: Commit updated menu
+      - name: Commit food lists, remove PDFs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet -- menu.json index.html; then
+          git add -A menus menu.json index.html
+          if git diff --cached --quiet; then
             echo "Menu unchanged - nothing to commit."
             exit 0
           fi
-          week=$(python -c "import json;print(json.load(open('menu.json',encoding='utf-8'))['week'])")
-          git add menu.json index.html
-          git commit -m "Menu update: ${week:-new week}"
+          weeks=$(python -c "import json;w=json.load(open('menu.json',encoding='utf-8'))['weeks'];print(w[-1]['week'])")
+          git commit -m "Menu update: ${weeks:-new week} (food list stored, PDF removed)"
           git push

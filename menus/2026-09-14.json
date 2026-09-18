@@ -1,0 +1,406 @@
+{
+  "week": "14 - 20 Sep 2026",
+  "days": [
+    {
+      "date": "2026-09-14",
+      "weekday": "Mon",
+      "theme": "Green Monday",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Pho with Vietnamese Sausage in Soup",
+            "zh": "扎肉湯檬粉"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Pork Soup with Snow Fungus and Pear",
+            "zh": "雪梨雪耳豬骨湯"
+          },
+          {
+            "en": "Mapo Tofu",
+            "zh": "麻婆豆腐"
+          },
+          {
+            "en": "Sweet and Sour Chicken",
+            "zh": "咕嚕雞"
+          },
+          {
+            "en": "Red Dates Sweet Soup with Wolfberry and Peach Gum",
+            "zh": "紅棗杞子桃膠糖水"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Pork Soup with Snow Fungus and Pear",
+            "zh": "雪梨雪耳豬骨湯"
+          },
+          {
+            "en": "Mapo Tofu",
+            "zh": "麻婆豆腐"
+          },
+          {
+            "en": "Steamed chicken feet and pork ribs",
+            "zh": "鳳爪蒸排骨"
+          },
+          {
+            "en": "Red Dates Sweet Soup with Wolfberry and Peach Gum",
+            "zh": "紅棗杞子桃膠糖水"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Hard Boiled Egg",
+            "zh": "烚蛋"
+          },
+          {
+            "en": "Macaroni Soup with Char Siu",
+            "zh": "叉燒湯通粉"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-15",
+      "weekday": "Tue",
+      "theme": "Western",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Hard Boiled Egg",
+            "zh": "烚蛋"
+          },
+          {
+            "en": "Macaroni Soup with Char Siu",
+            "zh": "叉燒湯通粉"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Cream of Mushroom Soup",
+            "zh": "磨菇忌廉湯"
+          },
+          {
+            "en": "Stir-fried Broccoli and Cauliflower with Garlic and Butter",
+            "zh": "蒜茸牛油雙花"
+          },
+          {
+            "en": "Braised Beef with Red Wine",
+            "zh": "紅洒燴牛腩"
+          },
+          {
+            "en": "Cheese Cake",
+            "zh": "芝士餅"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Cream of Mushroom Soup",
+            "zh": "磨菇忌廉湯"
+          },
+          {
+            "en": "Stir-fried Broccoli and Cauliflower with Garlic and Butter",
+            "zh": "蒜茸牛油雙花"
+          },
+          {
+            "en": "Braised Chicken Fillets in Portuguese Sauce",
+            "zh": "葡汁燴雞球"
+          },
+          {
+            "en": "Cheese Cake",
+            "zh": "芝士餅"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Dumplings with Wonton Noodles",
+            "zh": "水餃湯生麵"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-16",
+      "weekday": "Wed",
+      "theme": "Jewellery",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Dumplings with Wonton Noodles",
+            "zh": "水餃湯生麵"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Fish Soup with Azuki Bean and Kudzu",
+            "zh": "粉葛赤小豆煲魚湯"
+          },
+          {
+            "en": "Braised Hairy Gourd with Bean Vermicelli and Dried Small Shrimps",
+            "zh": "蝦米粉絲煮節瓜"
+          },
+          {
+            "en": "Black Pepper Chicken Leg",
+            "zh": "黑椒燒雞脾"
+          },
+          {
+            "en": "Apple",
+            "zh": "富士蘋果"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Dace Fish Soup with Azuki Bean and Kudzu",
+            "zh": "粉葛赤小豆煲魚湯"
+          },
+          {
+            "en": "Braised Hairy Gourd with Bean Vermicelli and Dried Small Shrimps",
+            "zh": "蝦米粉絲煮節瓜"
+          },
+          {
+            "en": "Fried Egg with Chinese Chive and BBQ Pork",
+            "zh": "韮黃叉燒炒蛋"
+          },
+          {
+            "en": "Apple",
+            "zh": "富士蘋果"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Instant Noodle Soup with Spicy Pork Dice",
+            "zh": "五香肉丁湯公仔麵"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-17",
+      "weekday": "Thu",
+      "theme": "Jewellery",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Instant Noodle Soup with Spicy Pork Dice",
+            "zh": "五香肉丁湯公仔麵"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Hericium Mushroom and Corn Pork Shank Soup",
+            "zh": "猴頭菇粟米豬踭湯"
+          },
+          {
+            "en": "Stir-fried Sweet Peas with Dried Silver Fish and Cashews",
+            "zh": "腰果銀魚乾甜豆"
+          },
+          {
+            "en": "Pork Patty with Salted Egg",
+            "zh": "鹹蛋蒸肉餅"
+          },
+          {
+            "en": "Ice Cream",
+            "zh": "雪糕"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Hericium Mushroom and Corn Pork Shank Soup",
+            "zh": "猴頭菇粟米豬踭湯"
+          },
+          {
+            "en": "Stir-fried Sweet Peas with Dried Silver Fish and Cashews",
+            "zh": "腰果銀魚乾甜豆"
+          },
+          {
+            "en": "Spring Onion Chicken Steak",
+            "zh": "蔥油雞扒"
+          },
+          {
+            "en": "Ice cream",
+            "zh": "雪糕"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Cantonese Sampan Congee",
+            "zh": "艇仔粥"
+          },
+          {
+            "en": "Dim Sum",
+            "zh": "點心"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-18",
+      "weekday": "Fri",
+      "theme": "Jewellery",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Cantonese Sampan Congee",
+            "zh": "艇仔粥"
+          },
+          {
+            "en": "Dim Sum",
+            "zh": "點心"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Pork Spare Ribs Soup with Lotus Root and Octopus",
+            "zh": "蓮藕章魚豬骨湯"
+          },
+          {
+            "en": "Stir-fried Pig Blood Curd and Lettuce in Sa Cha Sauce",
+            "zh": "沙茶豬紅生菜"
+          },
+          {
+            "en": "Sweetcorn with Chicken",
+            "zh": "粟米雞球"
+          },
+          {
+            "en": "Banana",
+            "zh": "香蕉"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Pork Spare Ribs Soup with Lotus Root and Octopus",
+            "zh": "蓮藕章魚豬骨湯"
+          },
+          {
+            "en": "Stir-fried Pig Blood Curd and Lettuce in Sa Cha Sauce",
+            "zh": "沙茶豬紅生菜"
+          },
+          {
+            "en": "Spare Ribs with Plum Sauce",
+            "zh": "冰梅骨"
+          },
+          {
+            "en": "Banana",
+            "zh": "香蕉"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Japanese Soup with Char Siu Udon",
+            "zh": "日式叉燒湯烏冬"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-19",
+      "weekday": "Sat",
+      "theme": "Jewellery",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Japanese Soup with Char Siu Udon",
+            "zh": "日式叉燒湯烏冬"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Pork Spare Ribs Soup with Carrot and Chinese Cabbages",
+            "zh": "甘筍大白菜煲唐排湯"
+          },
+          {
+            "en": "Stir-Fried Prawns with Cucumber and Preserved Radish",
+            "zh": "青瓜醬炒菜甫蝦仁"
+          },
+          {
+            "en": "Steamed Pork with Preserved Black Olives",
+            "zh": "欖角蒸豬肉"
+          },
+          {
+            "en": "Orange",
+            "zh": "香橙"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Pork Spare Ribs Soup with Carrot and Chinese Cabbages",
+            "zh": "甘筍大白菜煲唐排湯"
+          },
+          {
+            "en": "Stir-Fried Prawns with Cucumber and Preserved Radish",
+            "zh": "青瓜醬炒菜甫蝦仁"
+          },
+          {
+            "en": "Sand Ginger Chicken Wing",
+            "zh": "沙薑雞翼"
+          },
+          {
+            "en": "Orange",
+            "zh": "香橙"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Wonton Shanghai Noodles",
+            "zh": "雲吞湯上海麵"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-20",
+      "weekday": "Sun",
+      "theme": "Jewellery",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Wonton Shanghai Noodles",
+            "zh": "雲吞湯上海麵"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Pork Spare Ribs Soup with Watercress and Dried Duck Gizzard",
+            "zh": "陳腎西洋菜豬骨湯"
+          },
+          {
+            "en": "Stir-fried Beef with Cabbage in Black Bean Sauce",
+            "zh": "豉椒牛肉椰菜"
+          },
+          {
+            "en": "Steamed Egg with Dried Shrimp and Minced Pork",
+            "zh": "蝦米肉碎蒸水蛋"
+          },
+          {
+            "en": "Pear",
+            "zh": "蜜梨"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Pork Spare Ribs Soup with Watercress and Dried Duck Gizzard",
+            "zh": "陳腎西洋菜豬骨湯"
+          },
+          {
+            "en": "Stir-fried Beef with Cabbage in Black Bean Sauce",
+            "zh": "豉椒牛肉椰菜"
+          },
+          {
+            "en": "Steamed Pork Ribs with Fermented Black Beans and Bean Curd Puffs",
+            "zh": "豉汁豆卜蒸排骨"
+          },
+          {
+            "en": "Pear",
+            "zh": "蜜梨"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Fish Ball & Cuttlefish Ball Vermicelli",
+            "zh": "雙丸湯米粉"
+          }
+        ]
+      }
+    }
+  ]
+}
