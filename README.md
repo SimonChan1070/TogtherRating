@@ -42,18 +42,18 @@ Ratings that fail to send (no signal) are kept on the phone and retried automati
 The app is a Progressive Web App: `manifest.webmanifest`, `sw.js` and `icons/` make it installable
 with a home-screen icon, full-screen view and offline menu. It must be served over **HTTPS**.
 
-Easiest free host — **GitHub Pages**:
-1. Create a GitHub repo (e.g. `together-rating`), upload this whole folder (keep `index.html` at the root).
-2. Repo → Settings → Pages → Source: *Deploy from a branch* → `main` / root → Save.
-3. Your app URL becomes `https://<user>.github.io/together-rating/` — share this in WhatsApp.
-   (Netlify Drop or any intranet HTTPS server works too.)
+Hosted on **GitHub Pages** (repo `SimonChan1070/TogtherRating`, branch `main`, root):
+
+**App URL: https://simonchan1070.github.io/TogtherRating/** — share this link in WhatsApp.
+
+To publish changes: `git add -A && git commit -m "..." && git push` — Pages redeploys in about a minute.
 
 Install on phones:
 - **Android (Chrome)**: open the link → the app shows an *Install* banner (or ⋮ → *Add to Home screen*).
 - **iPhone (Safari)**: open the link → Share ⬆︎ → *Add to Home Screen*.
 
-Weekly menu update = re-run `extract_menu.py` and upload the new `index.html`; installed apps pick it up
-on next open (menu is fetched network-first). If you change `sw.js`, bump `CACHE = "ttr-v2"`.
+Weekly menu update = re-run `extract_menu.py`, commit and push; installed apps pick it up on next open
+(menu is fetched network-first). If you change `sw.js`, bump `CACHE = "ttr-v2"`.
 
 ## What the app does
 
