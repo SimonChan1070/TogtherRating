@@ -1,0 +1,46 @@
+name: Update menu from PDF
+
+# Drop a new weekly PDF into the menus/ folder (GitHub web upload, the Drive/Gmail bridge, or git push)
+# and this extracts it, rebuilds index.html and commits — GitHub Pages then redeploys the app.
+on:
+  push:
+    paths:
+      - "menus/*.pdf"
+      - "menus/*.PDF"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-menu
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install extractor dependency
+        run: pip install --quiet pdfplumber
+
+      - name: Extract newest menu PDF into the app
+        run: python extract_menu.py --latest menus menu.json
+
+      - name: Commit updated menu
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- menu.json index.html; then
+            echo "Menu unchanged - nothing to commit."
+            exit 0
+          fi
+          week=$(python -c "import json;print(json.load(open('menu.json',encoding='utf-8'))['week'])")
+          git add menu.json index.html
+          git commit -m "Menu update: ${week:-new week}"
+          git push

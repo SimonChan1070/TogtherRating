@@ -11,16 +11,31 @@ Mobile web app for rating the Together canteen menu. Ratings are stored in a Goo
 | `extract_menu.py` | Turns the weekly bilingual menu PDF into `menu.json` and injects it into `index.html`. |
 | `menu.json` | This week's menu (14 – 20 Sep 2026), Chinese + English, per meal. |
 | `manifest.webmanifest`, `sw.js`, `icons/` | PWA files: home-screen install, full-screen, offline menu. |
+| `menus/` | Weekly menu PDFs; adding one triggers the update Action. |
+| `.github/workflows/update-menu.yml` | GitHub Action: extract newest PDF → commit → Pages redeploy. |
+| `menu_bridge.gs` | Apps Script: forwards new PDFs from a Drive folder / Gmail into `menus/`. |
 | `apps_script.gs` | Source of the Apps Script web app attached to the Google Sheet (for reference / redeploy). |
 
-## Weekly update
+## Weekly update — three ways
 
+**A. Upload the PDF on GitHub (easiest, works from a phone)**
+1. Open https://github.com/SimonChan1070/TogtherRating/tree/main/menus
+2. *Add file → Upload files* → drop the new PDF (keep the canteen's name, e.g. `Together menu on 21 - 27 Sep 2026.pdf`) → *Commit changes*.
+3. The **Update menu from PDF** Action (`.github/workflows/update-menu.yml`) extracts the newest week, rebuilds
+   `index.html` and commits; Pages redeploys ~1 min later. Check progress under the repo's *Actions* tab.
+
+**B. Google Drive folder or Gmail (automatic)** — `menu_bridge.gs`
+A standalone Apps Script checks every 15 minutes for new PDFs in a Drive folder and/or emails with subject
+"Together menu" and pushes them into `menus/` on GitHub (which triggers A). Setup steps are at the top of `menu_bridge.gs`;
+it needs a GitHub fine-grained token (repo → Contents: read/write) stored as a script property.
+
+**C. On this PC**
 ```
 pip install pdfplumber          # once
 python extract_menu.py "F:\BackUp\Together menu on 21 - 27 Sep 2026.pdf"
+git add -A && git commit -m "Menu 21-27 Sep" && git push
 ```
-It prints every dish it found — glance over it against the PDF — and updates `index.html`.
-Then re-upload `index.html` to wherever you host it.
+The extractor prints every dish it found — glance over it against the PDF.
 
 ## The database: Google Sheet "Together Rating DB"
 

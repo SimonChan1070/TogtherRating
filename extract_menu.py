@@ -158,13 +158,38 @@ def inject_into_app(data, html_path):
         print(f"updated {html_path}")
 
 
+WEEK_RE = r"(\d{1,2})\s*-\s*(\d{1,2})\s+([A-Za-z]{3})[a-z]*\s+(\d{4})"
+
+
+def week_start(path):
+    """Sort key for a menu PDF: the week's start date parsed from its filename, else its mtime."""
+    m = re.search(WEEK_RE, os.path.basename(path))
+    if m and m.group(3).lower() in MONTHS:
+        return (1, date(int(m.group(4)), MONTHS[m.group(3).lower()], int(m.group(1))).toordinal())
+    return (0, int(os.path.getmtime(path)))
+
+
+def latest_pdf(folder):
+    pdfs = [os.path.join(folder, f) for f in os.listdir(folder) if f.lower().endswith(".pdf")]
+    if not pdfs:
+        raise SystemExit(f"no PDF files in {folder}")
+    return max(pdfs, key=week_start)
+
+
 def main():
     if len(sys.argv) < 2:
         raise SystemExit(__doc__)
-    pdf_path = sys.argv[1]
-    out_path = sys.argv[2] if len(sys.argv) > 2 else "menu.json"
+    args = sys.argv[1:]
+    if args[0] == "--latest":
+        pdf_path = latest_pdf(args[1])
+        args = args[2:]
+        print(f"newest menu: {pdf_path}")
+    else:
+        pdf_path = args[0]
+        args = args[1:]
+    out_path = args[0] if args else "menu.json"
 
-    m = re.search(r"(\d{1,2})\s*-\s*(\d{1,2})\s+([A-Za-z]{3})[a-z]*\s+(\d{4})", pdf_path)
+    m = re.search(WEEK_RE, os.path.basename(pdf_path))
     year = int(m.group(4)) if m else date.today().year
     week_label = f"{m.group(1)} - {m.group(2)} {m.group(3)} {year}" if m else ""
     default_month = MONTHS.get(m.group(3).lower()) if m else date.today().month
