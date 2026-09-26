@@ -1,0 +1,430 @@
+{
+  "week": "",
+  "days": [
+    {
+      "date": "2026-09-28",
+      "weekday": "Mon",
+      "theme": "*self seve",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Congee with meat and century egg",
+            "zh": "皮蛋瘦肉粥"
+          },
+          {
+            "en": "Alkaline rice dumpling",
+            "zh": "珍珠雞"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Pork Soup with Winter Melon, Pear Barley and Lotus Leaf",
+            "zh": "冬瓜荷葉薏米豬骨湯"
+          },
+          {
+            "en": "Vegetables with Assorted Mushrooms",
+            "zh": "雙菇扒菜心"
+          },
+          {
+            "en": "Honey Char Siu and Salty Egg",
+            "zh": "叉燒拼鹹蛋"
+          },
+          {
+            "en": "Apple",
+            "zh": "蘋果"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Pork Soup with Winter Melon, Pear Barley and Lotus Leaf",
+            "zh": "冬瓜荷葉薏米豬骨湯"
+          },
+          {
+            "en": "Vegetables with Assorted Mushrooms",
+            "zh": "雙菇扒菜心"
+          },
+          {
+            "en": "Braised Pork Knuckles with Red Fermented Bean Curd",
+            "zh": "南乳炆豬手"
+          },
+          {
+            "en": "Apple",
+            "zh": "蘋果"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Glutinous Rice Roll",
+            "zh": "豆漿"
+          },
+          {
+            "en": "Soy Milk",
+            "zh": "粢飯"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-29",
+      "weekday": "Tue",
+      "theme": "Shanghai *self seve",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Glutinous Rice Roll",
+            "zh": "豆漿"
+          },
+          {
+            "en": "Soy Milk",
+            "zh": "粢飯"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Sweet and sour soup",
+            "zh": "酸辣湯"
+          },
+          {
+            "en": "Twice-Cooked Pork Slices",
+            "zh": "回鍋肉片"
+          },
+          {
+            "en": "Shanghai Fried Noodles",
+            "zh": "上海粗炒"
+          },
+          {
+            "en": "Coconut sago pudding",
+            "zh": "椰汁馬豆糕"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Sweet and sour soup",
+            "zh": "酸辣湯"
+          },
+          {
+            "en": "Twice-Cooked Pork Slices",
+            "zh": "回鍋肉片"
+          },
+          {
+            "en": "Braised Pork Belly",
+            "zh": "紅燒肉"
+          },
+          {
+            "en": "Coconut sago pudding",
+            "zh": "椰汁馬豆糕"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Vietnamese sausage",
+            "zh": "越式扎肉"
+          },
+          {
+            "en": "Vermicell with soup",
+            "zh": "湯檬粉"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-09-30",
+      "weekday": "Wed",
+      "theme": "*self seve",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Vietnamese sausage",
+            "zh": "越式扎肉"
+          },
+          {
+            "en": "Vermicell with soup",
+            "zh": "湯檬粉"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Pork Rib Soup with Watercress and Dried Duck Gizzard",
+            "zh": "西洋菜陳腎煲豬骨"
+          },
+          {
+            "en": "Fried Slice Fish with Broccoli Stewed Beef Brisket in Chu Hou Sauce",
+            "zh": "魚片炒西蘭花"
+          },
+          {
+            "en": "Barley, Bean Curd and Egg",
+            "zh": "柱候蘿蔔牛腩"
+          },
+          {
+            "en": "Sweet Soup",
+            "zh": "腐竹薏米蛋花"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Pork Rib Soup with Watercress and Dried Duck Gizzard",
+            "zh": "西洋菜陳腎煲豬骨"
+          },
+          {
+            "en": "Fried Slice Fish with Broccoli",
+            "zh": "魚片炒西蘭花"
+          },
+          {
+            "en": "Steamed Pork Ribs with Chciken Fleet",
+            "zh": "鳳爪蒸排骨"
+          },
+          {
+            "en": "Barley, Bean Curd and Egg Sweet Soup",
+            "zh": "腐竹薏米蛋花"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Congee with Minced Pork and Dried Flounder",
+            "zh": "方魚肉碎粥"
+          },
+          {
+            "en": "Fish Siu Mai",
+            "zh": "魚肉燒賣"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-10-01",
+      "weekday": "Thu",
+      "theme": "*self seve",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Congee with Minced Pork and Dried Flounder",
+            "zh": "方魚肉碎粥"
+          },
+          {
+            "en": "Fish Siu Mai",
+            "zh": "魚肉燒賣"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Pork Spare Ribs Soup with Lotus Root and Octopus",
+            "zh": "蓮藕章魚煲唐排湯"
+          },
+          {
+            "en": "Sacha Beef with Lettuce",
+            "zh": "沙茶牛肉生菜"
+          },
+          {
+            "en": "Deep Fried Fish Fillet",
+            "zh": "香酥魚柳"
+          },
+          {
+            "en": "Ice cream",
+            "zh": "雪糕"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Pork Spare Ribs Soup with Lotus Root and Octopus",
+            "zh": "蓮藕章魚煲唐排湯"
+          },
+          {
+            "en": "Sacha Beef With Lettuce",
+            "zh": "沙茶牛肉生菜"
+          },
+          {
+            "en": "Grilled Mackerel",
+            "zh": "鹽燒鯖魚雪"
+          },
+          {
+            "en": "Ice cream",
+            "zh": "糕"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Fried Eggs with Luncheon Meat",
+            "zh": "餐肉炒蛋"
+          },
+          {
+            "en": "instant noodles",
+            "zh": "湯公仔麵"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-10-02",
+      "weekday": "Fri",
+      "theme": "*self seve",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Fried Eggs with Luncheon Meat",
+            "zh": "餐肉炒蛋"
+          },
+          {
+            "en": "instant noodles",
+            "zh": "湯公仔麵"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Chicken Soup with Coconut and Snow Fungus",
+            "zh": "雪耳椰子煲雞湯"
+          },
+          {
+            "en": "Braised Hairy Gourd with Bean Vermicelli and Dried Small Shrimps",
+            "zh": "粉絲蝦米煮節瓜"
+          },
+          {
+            "en": "Sweetcorn with Pork Cubes",
+            "zh": "粟米肉粒"
+          },
+          {
+            "en": "Orange",
+            "zh": "香橙"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Chicken Soup with Coconut and Snow Fungus",
+            "zh": "雪耳椰子煲雞湯"
+          },
+          {
+            "en": "Braised Hairy Gourd with Bean Vermicelli and Dried Small Shrimps",
+            "zh": "粉絲蝦米煮節瓜"
+          },
+          {
+            "en": "BBQ Suace Pork Ribs",
+            "zh": "秘醬焗金沙骨"
+          },
+          {
+            "en": "Orange",
+            "zh": "香橙"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Sprouts chicken fried with Vermicelli",
+            "zh": "銀芽雞絲炆米粉"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-10-03",
+      "weekday": "Sat",
+      "theme": "*self seve",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Sprouts chicken fried with Vermicelli",
+            "zh": "銀芽雞絲炆米粉"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Pork Soup with Yellow",
+            "zh": "老黃瓜扁豆煲瘦肉湯"
+          },
+          {
+            "en": "Melon and Bean Sweet Sour Gluten and Vegetables",
+            "zh": "甜酸素筋扒時菜"
+          },
+          {
+            "en": "Black Pepper Chciken Leg",
+            "zh": "黑椒燒雞脾"
+          },
+          {
+            "en": "Banana",
+            "zh": "香蕉"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Pork Soup with Yellow",
+            "zh": "老黃瓜扁豆煲瘦肉湯"
+          },
+          {
+            "en": "Melon and Bean Sweet Sour Gluten and Vegetables",
+            "zh": "甜酸素筋扒時菜"
+          },
+          {
+            "en": "Pork Patty with Preserved Vegetables",
+            "zh": "冬菜蒸肉餅"
+          },
+          {
+            "en": "Banana",
+            "zh": "香蕉"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Fried bean and meat sauce with noodle in soup",
+            "zh": "炸醬湯粗麵"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-10-04",
+      "weekday": "Sun",
+      "theme": "*self seve",
+      "meals": {
+        "Breakfast": [
+          {
+            "en": "Fried bean and meat sauce with noodle in soup",
+            "zh": "炸醬湯粗麵"
+          }
+        ],
+        "Lunch": [
+          {
+            "en": "Pork Soup with Green Radish and Carrot",
+            "zh": "青紅蘿蔔煲豬尾骨湯"
+          },
+          {
+            "en": "Stir-fried Shanghai Pak Choi with Garlic and Straw Mushroom",
+            "zh": "雞粒草菇浸小棠菜"
+          },
+          {
+            "en": "Braised Pork Cartilage",
+            "zh": "紅燒豬軟骨"
+          },
+          {
+            "en": "Pear",
+            "zh": "香梨"
+          }
+        ],
+        "Dinner": [
+          {
+            "en": "Pork Soup with Green Radish and Carrot",
+            "zh": "青紅蘿蔔煲豬尾骨湯"
+          },
+          {
+            "en": "Stir-fried Shanghai Pak Choi with Garlic and Straw Mushroom",
+            "zh": "雞粒草菇浸小棠菜"
+          },
+          {
+            "en": "Fried Eggs with Chives and Clams",
+            "zh": "韭菜峴肉煎蛋"
+          },
+          {
+            "en": "Pear",
+            "zh": "香梨"
+          }
+        ],
+        "Supper": [
+          {
+            "en": "Congee with dried vegetables and spare ribs",
+            "zh": "菜乾排骨粥"
+          },
+          {
+            "en": "Steamed Cabbage and Pork Bun",
+            "zh": "菜肉飽"
+          }
+        ]
+      }
+    }
+  ]
+}
