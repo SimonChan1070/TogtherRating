@@ -58,5 +58,41 @@ class WeekdayRegressionTests(unittest.TestCase):
                                  [f"2026-10-{day}" for day in range(12, 19)])
 
 
+class DishWrapRegressionTests(unittest.TestCase):
+    def test_wrapped_noodle_breakfast_stays_one_bilingual_dish(self):
+        zh_days = [
+            {"date_lines": [f"{12 + i}/10"], "cells": {meal: [] for meal in extract_menu.MEALS}}
+            for i in range(7)
+        ]
+        en_days = [
+            {"date_lines": [f"{12 + i}/10"], "cells": {meal: [] for meal in extract_menu.MEALS}}
+            for i in range(7)
+        ]
+        # The actual line wraps in the 12 October menu PDF.
+        zh_days[0]["cells"]["Breakfast"] = [
+            ("時菜鮮蝦雲吞", 108, ["時菜鮮蝦雲吞"]),
+            ("湯粗麵", 54, ["湯粗麵"]),
+        ]
+        en_days[0]["cells"]["Breakfast"] = [
+            ("Noodle Soup with", 93.1, ["Noodle", "Soup", "with"]),
+            ("Vegetable Shrimp", 92.6, ["Vegetable", "Shrimp"]),
+            ("Wonton", 42.7, ["Wonton"]),
+        ]
+        with patch.object(extract_menu.pdfplumber, "open") as open_pdf:
+            open_pdf.return_value.__enter__.return_value.pages = [object(), object()]
+            with patch.object(extract_menu, "parse_page", side_effect=[zh_days, en_days]):
+                week = extract_menu.parse_pdf("Together menu on 12 - 18 Oct 2026.pdf")
+        self.assertEqual(week["days"][0]["meals"]["Breakfast"], [
+            {"en": "Noodle Soup with Vegetable Shrimp Wonton", "zh": "時菜鮮蝦雲吞湯粗麵"},
+        ])
+
+    def test_separate_congee_and_bun_are_preserved(self):
+        dishes = extract_menu.group_zh([
+            ("菜乾排骨粥", 100, ["菜乾排骨粥"]),
+            ("饅頭", 40, ["饅頭"]),
+        ])
+        self.assertEqual([text for text, _ in dishes], ["菜乾排骨粥", "饅頭"])
+
+
 if __name__ == "__main__":
     unittest.main()

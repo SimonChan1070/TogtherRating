@@ -95,10 +95,14 @@ def cell_lines(words, x0, x1, y0, y1):
     return out
 
 
+ZH_NOODLE_TAILS = {"湯粗麵", "湯幼麵", "湯麵", "湯通粉", "湯米", "湯米粉", "湯米線", "湯河粉", "湯菠菜麵"}
+
+
 def group_zh(lines):
     """Chinese dishes are one per line. Two wrap shapes occur: a 1-char line is the tail of the
     previous dish, and a short (<=2 char) word separated by a gap at the end of a line is the head
-    of the next dish, which continues on the following line ("...豬骨湯 草" / "菇蒜子浸菜心")."""
+    of the next dish, which continues on the following line ("...豬骨湯 草" / "菇蒜子浸菜心").
+    Noodle-soup tails such as "湯粗麵" also continue the previous dish."""
     dishes = []
     pending = None  # head fragment waiting for the next line
     for text, width, words in lines:
@@ -112,7 +116,7 @@ def group_zh(lines):
         if pending is not None:
             dishes.append((pending + text, width))
             pending = None
-        elif dishes and len(text) <= 1:
+        elif dishes and (len(text) <= 1 or text in ZH_NOODLE_TAILS):
             dishes[-1] = (dishes[-1][0] + text, dishes[-1][1])
         else:
             dishes.append((text, width))

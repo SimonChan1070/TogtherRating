@@ -1984,12 +1984,8 @@
           "meals": {
             "Breakfast": [
               {
-                "en": "Noodle Soup with Vegetable Shrimp",
-                "zh": "時菜鮮蝦雲吞"
-              },
-              {
-                "en": "Wonton",
-                "zh": "湯粗麵"
+                "en": "Noodle Soup with Vegetable Shrimp Wonton",
+                "zh": "時菜鮮蝦雲吞湯粗麵"
               }
             ],
             "Lunch": [
