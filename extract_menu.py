@@ -53,9 +53,10 @@ def column_bounds(page):
 
 def row_bounds(page, day_names, first_col_right):
     words = page.extract_words()
-    # the weekday column is "Mon".."Sun" or "一".."日" - the English page has used both over time
+    # English weekdays may be "Mon".."Sun", "MON".."SUN", or "一".."日".
     for names in (day_names, ZH_DAYS, EN_DAYS):
-        anchors = [w for w in words if w["text"] in names and w["x0"] < first_col_right]
+        normalized_names = {name.casefold() for name in names}
+        anchors = [w for w in words if w["text"].casefold() in normalized_names and w["x0"] < first_col_right]
         if len(anchors) == 7:
             break
     else:
@@ -257,7 +258,8 @@ def parse_pdf(pdf_path):
         last_month = month
         theme = " ".join(t for t in en[i]["date_lines"]
                          if not re.search(r"\d", t) and "self serve" not in t.lower()
-                         and t not in EN_DAYS and t not in ZH_DAYS).strip() or THEME_DEFAULT.get(EN_DAYS[i], "")
+                         and t.casefold() not in {name.casefold() for name in EN_DAYS}
+                         and t not in ZH_DAYS).strip() or THEME_DEFAULT.get(EN_DAYS[i], "")
         meals = {}
         for meal in MEALS:
             zh_d = group_zh(zh[i]["cells"][meal])
